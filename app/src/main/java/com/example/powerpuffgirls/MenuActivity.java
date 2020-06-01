@@ -35,7 +35,12 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoStayhome(View view) {
         isLeavingApp = false;
+    public void gotoGame(View view) {
         startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
+    }
+
+    public void gotoWorkout(View view) {
+        startActivity(new Intent(MenuActivity.this, WorkoutActivity.class));
     }
 
     public void gotoSOS(View view) {

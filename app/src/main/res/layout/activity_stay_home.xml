@@ -9,9 +9,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stay Home Series Activity"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="30sp"/>
+        android:layout_marginTop="61dp"
+        android:text="Stay Home Series Activity"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="278dp"
+        android:onClick="goGame"
+        android:text="Play a game!"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button_workout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="313dp"
+        android:onClick="goWorkout"
+        android:text="Do a workout!"
+        android:textSize="24sp" />
 
 </RelativeLayout>
