@@ -17,12 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isLeavingApp = true;
         Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
 
-        MediaPlayer music = AudioPlay.music;
         if (AudioPlay.music == null) {
-            music = MediaPlayer.create(this, R.raw.coffin_dance);
+            MediaPlayer music = MediaPlayer.create(this, R.raw.coffin_dance);
             music.setLooping(true);
             music.setVolume(0.1f, 0.1f);
             music.start();
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isLeavingApp = true;
         Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
     }
 

@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity { //SafeDelete Type Parameter
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -44,15 +44,13 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            onAuthSuccess(currentUser);
-//        }
-        // updateUI(currentUser);
         if (currentUser != null) {
+            // onAuthSuccess(currentUser);
             isLeavingApp = false;
             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             finish();
         }
+        // updateUI(currentUser);
     }
 
     private void createAccount (String email, final String password) {
