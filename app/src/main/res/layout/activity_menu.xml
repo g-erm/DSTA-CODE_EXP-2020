@@ -55,20 +55,31 @@
         android:text="Declaration" />
 
     <Button
-        android:id="@+id/stayhomeButton"
+        android:id="@+id/gameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#AED2FF"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
         android:layout_below="@id/declarationButton"
-        android:onClick="gotoStayhome"
-        android:text="Stay At Home Series" />
+        android:onClick="gotoGame"
+        android:text="Play a Game" />
+
+    <Button
+        android:id="@+id/workoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AED2FF"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/gameButton"
+        android:onClick="gotoWorkout"
+        android:text="Do a Workout" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/stayhomeButton"
+        android:layout_below="@+id/workoutButton"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
         android:orientation="horizontal"

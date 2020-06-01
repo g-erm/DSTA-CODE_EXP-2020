@@ -9,9 +9,11 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".WorkoutVideoActivity"></activity>
+        <activity android:name=".WorkoutActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.OverlayTheme"></activity>
+            android:theme="@style/AppTheme.OverlayTheme" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".SOSActivity" />
         <activity android:name=".StayHomeActivity" />
