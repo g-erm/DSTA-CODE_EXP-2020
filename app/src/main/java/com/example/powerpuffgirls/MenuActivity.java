@@ -15,44 +15,50 @@ public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     boolean isLeavingApp = true;
-    private static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        mediaPlayer = AudioPlay.music;
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void gotoTrace(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, ContactTracingActivity.class));
     }
 
     public void gotoDeclaration(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, DeclarationActivity.class));
     }
 
     public void gotoStayhome(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
     }
 
     public void gotoSOS(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, SOSActivity.class));
     }
 
     public void gotoHelp(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
     public void gotoSettings(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
     }
 
 
     public void gotoSignout(View view) {
         mAuth.signOut();
-        finish();
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+        finish();
     }
 
     @Override
