@@ -35,6 +35,8 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoStayhome(View view) {
         isLeavingApp = false;
+    }
+
     public void gotoGame(View view) {
         startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
     }
