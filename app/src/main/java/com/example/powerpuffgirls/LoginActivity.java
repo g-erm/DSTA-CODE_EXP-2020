@@ -126,7 +126,7 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
         try {
             createAccount(NRIC, password);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Invalud NRIC/Password",
+            Toast.makeText(getApplicationContext(), "Invalid NRIC/Password",
                     Toast.LENGTH_SHORT).show();
         }
     }
