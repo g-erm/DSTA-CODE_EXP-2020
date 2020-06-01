@@ -4,19 +4,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class DeclarationActivity extends AppCompatActivity {
 
     private Spinner countryChoices;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_declaration);
+
+        getUserDetails();
 
         countryChoices = findViewById(R.id.country);
 
@@ -30,14 +49,27 @@ public class DeclarationActivity extends AppCompatActivity {
         final EditText name = (EditText) findViewById(R.id.fullname);
         final EditText departure = (EditText) findViewById(R.id.departure);
         final EditText returnDate = (EditText) findViewById(R.id.returnDate);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String departureString = departure.getText().toString();
+                String returnString = returnDate.getText().toString();
+
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(countryChoices.getSelectedItem().toString());
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").setValue(departureString);
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").setValue(returnString);
+
                 name.setText("");
                 departure.setText("");
                 returnDate.setText("");
                 countryChoices.setAdapter(adapter);
             }
         });
+    }
+
+    protected void getUserDetails() {
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 }

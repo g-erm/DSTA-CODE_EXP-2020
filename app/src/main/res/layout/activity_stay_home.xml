@@ -7,34 +7,40 @@
     tools:context=".StayHomeActivity">
 
     <TextView
+        android:id="@+id/stayhome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
-        android:text="Stay Home Series Activity"
-        android:textSize="30sp" />
+        android:layout_marginTop="60dp"
+        android:text="Stay Home Series"
+        android:textSize="40sp"
+        />
 
     <Button
         android:id="@+id/button_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="278dp"
-        android:onClick="goGame"
+        android:layout_below="@id/stayhome_text"
+        android:layout_marginTop="25sp"
+        android:layout_marginHorizontal="25sp"
+        android:background="#AED2FF"
+        android:onClick="gotoGame"
         android:text="Play a game!"
-        android:textSize="24sp" />
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/button_workout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="313dp"
-        android:onClick="goWorkout"
+        android:layout_below="@id/button_game"
+        android:layout_marginTop="5sp"
+        android:layout_marginHorizontal="25sp"
+        android:background="#AED2FF"
+        android:onClick="gotoWorkout"
         android:text="Do a workout!"
-        android:textSize="24sp" />
+        android:textSize="23sp" />
 
 </RelativeLayout>
