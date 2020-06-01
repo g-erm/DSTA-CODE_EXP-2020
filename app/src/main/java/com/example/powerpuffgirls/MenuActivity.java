@@ -15,7 +15,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     MediaPlayer music;
-    private boolean isLeavingApp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +29,26 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoTrace(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, ContactTracingActivity.class));
     }
 
     public void gotoDeclaration(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, DeclarationActivity.class));
     }
 
     public void gotoStayhome(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
     }
 
     public void gotoSOS(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, SOSActivity.class));
     }
 
     public void gotoHelp(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
     public void gotoSettings(View view) {
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
     }
 
