@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,25 +49,21 @@ public class DeclarationActivity extends AppCompatActivity {
         final EditText name = (EditText) findViewById(R.id.fullname);
         final EditText departure = (EditText) findViewById(R.id.departure);
         final EditText returnDate = (EditText) findViewById(R.id.returnDate);
-        final String country = countryChoices.getSelectedItem().toString();
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String departureString = departure.getText().toString();
+                String returnString = returnDate.getText().toString();
+
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(countryChoices.getSelectedItem().toString());
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("date").setValue(departureString);
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("date").setValue(returnString);
+
                 name.setText("");
                 departure.setText("");
                 returnDate.setText("");
                 countryChoices.setAdapter(adapter);
-
-//                String departureString = departure.getText().toString();
-//                String returnString = returnDate.getText().toString();
-//
-//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(country);
-//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("date").setValue(departureString);
-                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("month").setValue(departureString.substring(3,5));
-                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("year").setValue(departureString.substring(6));
-//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("date").setValue(returnString);
-                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("month").setValue(returnString.substring(3,5));
-                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("year").setValue(returnString.substring(6));
             }
         });
     }
