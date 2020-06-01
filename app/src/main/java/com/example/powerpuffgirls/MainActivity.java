@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer music;
+    boolean isLeavingApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
+
+        if (AudioPlay.music == null) {
+            MediaPlayer music = MediaPlayer.create(this, R.raw.coffin_dance);
+            music.setLooping(true);
+            music.setVolume(0.1f, 0.1f);
+            music.start();
+        }
 
         Thread thread = new Thread() {
             @Override
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
+                    isLeavingApp = false;
                     // If login details cached on device, run game
                     if (false) { //force to login page for now
                         Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
@@ -34,19 +43,17 @@ public class MainActivity extends AppCompatActivity {
                         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(loginIntent);
                     }
+                    finish();
                 }
             }
         };
         thread.start();
-        music = MediaPlayer.create(this, R.raw.coffin_dance);
-        music.setLooping(true);
-        music.setVolume(0.1f,0.1f);
-        music.start();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        isLeavingApp = true;
         Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
     }
 
@@ -59,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        music.pause();
+        if (isLeavingApp) {
+            AudioPlay.music.pause();
+        }
         Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
