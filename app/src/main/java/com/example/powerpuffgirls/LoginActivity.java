@@ -1,37 +1,110 @@
 package com.example.powerpuffgirls;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run () {
-//                try {
-//                    sleep(5000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
-//                    startActivity(menuIntent);
-//
-//                }
-//            }
-//        };
-//        thread.start();
+        mAuth = FirebaseAuth.getInstance();
     }
 
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // updateUI(currentUser);
+    }
 
-    public void gotoMenu(View view) {
-        startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+    private void createAccount (String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    private static final String TAG = "CreateUser";
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    public void signIn (String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    private static final String TAG = "Login";
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                            //pdateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    public void Login(View view) {
+        String NRIC = ((EditText)findViewById(R.id.NRIC)).getText().toString();
+        NRIC += "@gmail.com";
+        String password = ((EditText)findViewById(R.id.Password)).getText().toString();
+        try {
+            signIn(NRIC, password);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Invalud NRIC/Password",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void signUp(View view) {
+        String NRIC = ((EditText)findViewById(R.id.NRIC)).getText().toString();
+        NRIC += "@gmail.com";
+        String password = ((EditText)findViewById(R.id.Password)).getText().toString();
+        try {
+            createAccount(NRIC, password);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Invalud NRIC/Password",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
