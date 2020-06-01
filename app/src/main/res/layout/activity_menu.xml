@@ -6,13 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".MenuActivity">
 
+    <LinearLayout
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=""
+            android:text="Welcome back! "
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"/>
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#AED2FF"
+            android:onClick="gotoSettings"
+            android:text="Settings" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/traceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/topPanel"
         android:background="#AED2FF"
         android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="20sp"
+
         android:onClick="gotoTrace"
         android:text="Contract Tracing" />
 

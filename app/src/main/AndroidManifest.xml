@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HelpActivity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".HelpActivity" />
         <activity android:name=".SOSActivity" />
         <activity android:name=".StayHomeActivity" />
         <activity android:name=".DeclarationActivity" />
