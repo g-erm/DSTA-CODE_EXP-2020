@@ -36,5 +36,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoSettings(View view) {
+        startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
     }
 }
