@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "821323822756",
+    "firebase_url": "https://powerpuffgirls-48f2f.firebaseio.com",
+    "project_id": "powerpuffgirls-48f2f",
+    "storage_bucket": "powerpuffgirls-48f2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821323822756:android:0ea6de54ffae1c7d445831",
+        "android_client_info": {
+          "package_name": "com.example.powerpuffgirls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821323822756-u4ipplottccikklgmibltifagudqcaes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDScE2ddw3YWxVi1-g-2Qzdq3nBk7cMnPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821323822756-u4ipplottccikklgmibltifagudqcaes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
