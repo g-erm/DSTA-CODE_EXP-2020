@@ -3,6 +3,7 @@ package com.example.powerpuffgirls;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +15,13 @@ public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     boolean isLeavingApp = true;
+    private static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        mAuth = FirebaseAuth.getInstance();
+        mediaPlayer = AudioPlay.music;
     }
 
     public void gotoTrace(View view) {
