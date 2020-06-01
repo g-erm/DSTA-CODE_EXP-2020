@@ -15,7 +15,8 @@
         android:layout_marginTop="30sp"
         android:layout_marginRight="50sp"
         android:textAlignment="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:checked="true"/>
 
     <Switch
         android:id="@+id/loginSound"
@@ -27,25 +28,42 @@
         android:layout_marginTop="20sp"
         android:layout_marginRight="50sp"
         android:textAlignment="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:checked="true"/>
 
     <SeekBar
         android:id="@+id/seekLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="1"/>
+        android:layout_below="@id/loginSound"
+        android:layout_marginHorizontal="50sp"
+        android:max="100"
+        android:minHeight="30sp"
+        android:progress="50"/>
 
     <Switch
         android:id="@+id/menuSound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/loginSound"
+        android:layout_below="@id/seekLogin"
         android:text="Main Menu Song"
         android:textSize="20sp"
         android:layout_marginTop="20sp"
         android:layout_marginRight="50sp"
         android:textAlignment="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:checked="true"
+        />
+
+    <SeekBar
+        android:id="@+id/seekMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menuSound"
+        android:layout_marginHorizontal="50sp"
+        android:max="100"
+        android:minHeight="30sp"
+        android:progress="50"/>
 
 
 
