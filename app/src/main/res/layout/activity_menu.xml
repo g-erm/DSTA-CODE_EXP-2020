@@ -75,6 +75,7 @@
         android:text="Stay Home Series" />
 
     <LinearLayout
+        android:id="@+id/helps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stayhomeButton"
@@ -101,6 +102,19 @@
             android:onClick="gotoHelp"
             android:text="Request Help" />
     </LinearLayout>
+
+    <Button
+        android:layout_weight="5"
+        android:layout_marginLeft="10sp"
+        android:background="#AED2FF"
+        android:onClick="gotoGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/helps"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:text="Game" />
+
 
 
 

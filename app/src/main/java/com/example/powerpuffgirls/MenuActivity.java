@@ -66,4 +66,8 @@ public class MenuActivity extends AppCompatActivity {
             music.release();
         }
     }
+
+    public void gotoGame(View view) {
+        startActivity(new Intent(MenuActivity.this, MainGameActivity.class));
+    }
 }

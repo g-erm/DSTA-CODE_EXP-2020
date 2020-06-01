@@ -15,6 +15,7 @@ public class StayHomeActivity extends AppCompatActivity {
     }
 
     public void gotoGame(View view) {
+        startActivity(new Intent(StayHomeActivity.this, ChooseGameActivity.class));
     }
 
     public void gotoWorkout(View view) {
