@@ -9,8 +9,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/background"
         android:scaleType="centerCrop"
-        android:src="@drawable/background" />
+        android:src="@drawable/background"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="466dp"
@@ -21,7 +24,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="11dp"
         android:fontFamily="casual"
-        android:text="Kill The Germs!"
+        android:text="@string/kill_the_germs"
         android:textColor="#ffffff"
         android:textSize="65sp"
         android:textStyle="bold" />
@@ -30,9 +33,15 @@
         android:id="@+id/highScoreTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:text="High Score"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
+        android:text="@string/high_score"
         android:textColor="#000000"
         android:textSize="24sp" />
 
@@ -47,7 +56,8 @@
         android:layout_marginBottom="15dp"
         android:src="@drawable/ic_baseline_volume_up_24"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="6dp" />
+        android:layout_marginLeft="6dp"
+        android:contentDescription="@string/vol" />
 
     <Button
         android:id="@+id/play"

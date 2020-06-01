@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Powerpuff Girls</string>
+    <string name="kill_the_germs">Kill The Germs!</string>
+    <string name="high_score">High Score</string>
+    <string name="background">background</string>
+    <string name="vol">vol</string>
+    <string name="game_1">Game 1</string>
+    <string name="game_2">Game 2</string>
 </resources>
