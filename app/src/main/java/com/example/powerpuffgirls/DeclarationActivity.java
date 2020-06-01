@@ -57,8 +57,8 @@ public class DeclarationActivity extends AppCompatActivity {
                 String returnString = returnDate.getText().toString();
 
                 mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(countryChoices.getSelectedItem().toString());
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("date").setValue(departureString);
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("date").setValue(returnString);
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").setValue(departureString);
+                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").setValue(returnString);
 
                 name.setText("");
                 departure.setText("");
