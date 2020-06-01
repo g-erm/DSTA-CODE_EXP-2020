@@ -52,4 +52,12 @@ public class MenuActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(MenuActivity.this, LoginActivity.class));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isLeavingApp) {
+            AudioPlay.music.pause();
+        }
+    }
 }
