@@ -57,16 +57,16 @@ public class DeclarationActivity extends AppCompatActivity {
                 returnDate.setText("");
                 countryChoices.setAdapter(adapter);
 
-                String departureString = departure.getText().toString();
-                String returnString = returnDate.getText().toString();
-
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(country);
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("date").setValue(departureString.substring(0,2));
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("month").setValue(departureString.substring(3,5));
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("year").setValue(departureString.substring(6));
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("date").setValue(returnString.substring(0,2));
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("month").setValue(returnString.substring(3,5));
-                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("year").setValue(returnString.substring(6));
+//                String departureString = departure.getText().toString();
+//                String returnString = returnDate.getText().toString();
+//
+//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("country").setValue(country);
+//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("date").setValue(departureString);
+                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("month").setValue(departureString.substring(3,5));
+                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("departure").child("year").setValue(departureString.substring(6));
+//                mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("date").setValue(returnString);
+                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("month").setValue(returnString.substring(3,5));
+                //mDatabase.child("users").child(mAuth.getUid()).child("travel").child("return").child("year").setValue(returnString.substring(6));
             }
         });
     }
