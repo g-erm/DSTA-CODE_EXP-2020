@@ -14,13 +14,19 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    boolean isLeavingApp = true;
+    MediaPlayer music;
+    private boolean isLeavingApp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
+
+        music = MediaPlayer.create(this, R.raw.coffin_dance);
+        music.setLooping(true);
+        music.setVolume(0.1f, 0.1f);
+        music.start();
     }
 
     public void gotoTrace(View view) {
@@ -38,10 +44,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoGame(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
     }
 
     public void gotoWorkout(View view) {
+        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, WorkoutActivity.class));
     }
 
@@ -63,7 +71,6 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoSignout(View view) {
         mAuth.signOut();
-        isLeavingApp = false;
         startActivity(new Intent(MenuActivity.this, LoginActivity.class));
         finish();
     }
@@ -71,8 +78,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isLeavingApp) {
-            AudioPlay.music.pause();
+        if (music != null) {
+            music.release();
         }
     }
 }

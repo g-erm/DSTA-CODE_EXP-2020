@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private DatabaseReference mDatabase;
-    boolean isLeavingApp;
+    private MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        isLeavingApp = true;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // database key: firebase user.userId, val: nric
     }
@@ -46,9 +46,13 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             // onAuthSuccess(currentUser);
-            isLeavingApp = false;
             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             finish();
+        } else {
+            music = MediaPlayer.create(this, R.raw.coffin_dance);
+            music.setLooping(true);
+            music.setVolume(0.1f, 0.1f);
+            music.start();
         }
         // updateUI(currentUser);
     }
@@ -90,7 +94,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             onAuthSuccess(task.getResult().getUser());
-                            isLeavingApp = false;
                             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                             finish();
                             //pdateUI(user);
@@ -132,8 +135,8 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isLeavingApp) {
-            AudioPlay.music.pause();
+        if (music != null) {
+            music.release();
         }
     }
 
