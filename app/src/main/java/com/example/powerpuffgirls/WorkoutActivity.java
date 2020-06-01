@@ -13,7 +13,6 @@ public class WorkoutActivity extends AppCompatActivity {
     String[] dpossibilitiesStrings = {
             "Light Stretching",
             "Normal Exercise",
-            "Intermediate Exercise",
             "Advanced"
     };
 
@@ -29,9 +28,10 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     public void showVideos(View v) {
-        String choice = dpossibilitiesStrings[dpossibilities.getValue()];
+        int choice = dpossibilities.getValue();
         Intent toNext = new Intent();
         toNext.setClass(this, WorkoutVideoActivity.class);
+        toNext.putExtra("Difficulty String", dpossibilitiesStrings[choice]);
         toNext.putExtra("Difficulty", choice);
         startActivity(toNext);
     }
