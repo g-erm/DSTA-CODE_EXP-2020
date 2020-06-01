@@ -34,4 +34,7 @@ public class MenuActivity extends AppCompatActivity {
     public void gotoHelp(View view) {
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
+
+    public void gotoSettings(View view) {
+    }
 }
