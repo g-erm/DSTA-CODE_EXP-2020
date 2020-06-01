@@ -16,10 +16,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
+    boolean isLeavingApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        isLeavingApp = true;
     }
 
     public void onStart() {
@@ -34,6 +35,11 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // updateUI(currentUser);
+        if (currentUser != null) {
+            isLeavingApp = false;
+            startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+            finish();
+        }
     }
 
     private void createAccount (String email, String password) {
@@ -71,7 +77,9 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            isLeavingApp = false;
                             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                            finish();
                             //pdateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -105,6 +113,14 @@ public class LoginActivity<EmailPasswordActivity> extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Invalud NRIC/Password",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isLeavingApp) {
+            AudioPlay.music.pause();
         }
     }
 }

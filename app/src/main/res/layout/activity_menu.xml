@@ -17,7 +17,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="9"
+            android:layout_weight="8"
             android:text="Welcome back!"
             android:textAlignment="center"
             android:textSize="20sp" />
@@ -28,6 +28,15 @@
             android:layout_height="match_parent"
             android:background="#AED2FF"
             android:onClick="gotoSettings"
+            android:text="Settings" />
+
+        <Button
+            android:id="@+id/signoutButton"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#AED2FF"
+            android:onClick="gotoSignout"
             android:text="Settings" />
     </LinearLayout>
 

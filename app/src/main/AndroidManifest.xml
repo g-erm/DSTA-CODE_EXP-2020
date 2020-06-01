@@ -17,9 +17,12 @@
         <activity android:name=".StayHomeActivity" />
         <activity android:name=".DeclarationActivity" />
         <activity android:name=".ContactTracingActivity" />
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MenuActivity"
+            android:noHistory="true"/>
+        <activity android:name=".LoginActivity"
+            android:noHistory="true"/>
+        <activity android:name=".MainActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
