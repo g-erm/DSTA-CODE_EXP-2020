@@ -6,4 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <Switch
+        android:id="@+id/splashSound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Splash Screen Sound"
+        android:textSize="20sp"
+        android:layout_marginTop="30sp"
+        android:layout_marginRight="50sp"
+        android:textAlignment="center"
+        android:gravity="center" />
+
+    <Switch
+        android:id="@+id/loginSound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splashSound"
+        android:text="Login Sound"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="50sp"
+        android:textAlignment="center"
+        android:gravity="center" />
+
+    <SeekBar
+        android:id="@+id/seekLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="1"/>
+
+    <Switch
+        android:id="@+id/menuSound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginSound"
+        android:text="Main Menu Song"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="50sp"
+        android:textAlignment="center"
+        android:gravity="center" />
+
+
+
+
 </RelativeLayout>
