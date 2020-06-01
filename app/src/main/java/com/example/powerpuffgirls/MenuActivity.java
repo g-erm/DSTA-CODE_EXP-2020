@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +24,9 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
 
-        music = MediaPlayer.create(this, R.raw.coffin_dance);
+        music = MediaPlayer.create(this, R.raw.wamengti);
         music.setLooping(true);
-        music.setVolume(0.1f, 0.1f);
+        music.setVolume(0.2f, 0.2f);
         music.start();
     }
 
