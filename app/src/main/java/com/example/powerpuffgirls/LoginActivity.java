@@ -49,9 +49,9 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             finish();
         } else {
-            music = MediaPlayer.create(this, R.raw.coffin_dance);
+            music = MediaPlayer.create(this, R.raw.loginsound);
             music.setLooping(true);
-            music.setVolume(0.1f, 0.1f);
+            music.setVolume(0.5f, 0.5f);
             music.start();
         }
         // updateUI(currentUser);

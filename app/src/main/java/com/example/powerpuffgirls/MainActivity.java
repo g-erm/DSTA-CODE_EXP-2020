@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         };
         thread.start();
         MediaPlayer music = MediaPlayer.create(this, R.raw.introsong);
-        music.setVolume(.5f, .5f);
+        music.setVolume(.8f, .8f);
         music.start();
     }
 }
