@@ -158,6 +158,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoSignout(View view) {
         mAuth.signOut();
+        stopService(new Intent(this, TrackingService.class));
         startActivity(new Intent(MenuActivity.this, LoginActivity.class));
         finish();
     }
