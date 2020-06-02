@@ -17,9 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.security.auth.callback.Callback;
 
 public class FriendsActivity extends AppCompatActivity {
     private static final String TAG = "FriendsActivity";
@@ -27,11 +24,7 @@ public class FriendsActivity extends AppCompatActivity {
     SearchView mySearchView;
     ListView myList;
 
-    ArrayList<String> allId;
-    ArrayList<String> allNames;
     ArrayAdapter<String> adapter;
-
-    public HashMap<String, String> namesAndId = new HashMap<>();
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
