@@ -84,11 +84,22 @@
         android:onClick="gotoFriends"
         android:text="Find friends" />
 
+    <Button
+        android:id="@+id/news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:background="#AED2FF"
+        android:onClick="gotoNews"
+        android:text="Latest Top COVID-19 News" />
+
     <LinearLayout
         android:id="@+id/helps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/friends"
+        android:layout_below="@+id/news"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
         android:orientation="horizontal"
@@ -114,6 +125,19 @@
             android:onClick="gotoHelp"
             android:text="Request Help" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/music"
+        android:layout_width="69dp"
+        android:layout_height="66dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="gotoMusic"
+        android:background="@drawable/music_player"/>
 
 
 </RelativeLayout>

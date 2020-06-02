@@ -151,10 +151,13 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
+    public void gotoMusic(View view) {
+        startActivity(new Intent(MenuActivity.this, MusicActivity.class));
+    }
+
     public void gotoSettings(View view) {
         startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
     }
-
 
     public void gotoSignout(View view) {
         mAuth.signOut();
@@ -165,6 +168,10 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoFriends(View view) {
         startActivity(new Intent(MenuActivity.this, FriendsActivity.class));
+    }
+
+    public void gotoNews(View view) {
+        startActivity(new Intent(MenuActivity.this, NewsActivity.class));
     }
 
     @Override
