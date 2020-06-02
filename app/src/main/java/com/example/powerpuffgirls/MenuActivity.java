@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,6 +58,11 @@ public class MenuActivity extends AppCompatActivity {
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
+        // For Ray
+
+//        int permission2 = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+//        int permission3 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         //If the location permission has been granted, then start the TrackerService//
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
@@ -69,6 +75,19 @@ public class MenuActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST);
         }
+
+
+//        if (permission2 == PackageManager.PERMISSION_DENIED) {
+//            Log.d("Text", "");
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.RECORD_AUDIO},
+//                    PERMISSIONS_REQUEST);
+//        }
+//        if (permission3 == PackageManager.PERMISSION_DENIED) {
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                    PERMISSIONS_REQUEST);
+//        }
     }
 
     @Override
