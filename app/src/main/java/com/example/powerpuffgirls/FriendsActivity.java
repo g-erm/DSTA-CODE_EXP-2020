@@ -48,20 +48,30 @@ public class FriendsActivity extends AppCompatActivity {
         mySearchView = (SearchView)findViewById(R.id.searchView);
         myList = (ListView)findViewById(R.id.friendsList);
 
-        mDatabase.child("names").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getMap(dataSnapshot);
-            }
+        allNames.add("bob");
+        allNames.add("sally");
+        allNames.add("parry");
+        allNames.add("alicia");
+        allNames.add("amelia");
+        allNames.add("fiona");
+        allNames.add("cheryl");
+        allNames.add("jolene");
+        allNames.add("megan");
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+//        mDatabase.child("names").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                getMap(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
 
-        if (!this.namesAndId.isEmpty()) {
-            this.allNames = new ArrayList<>(this.namesAndId.keySet());
-        }
+//        if (!this.namesAndId.isEmpty()) {
+//            this.allNames = new ArrayList<>(this.namesAndId.keySet());
+//        }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.allNames);
         myList.setAdapter(adapter);
@@ -83,12 +93,12 @@ public class FriendsActivity extends AppCompatActivity {
         });
     }
 
-    public void getMap(DataSnapshot dataSnapshot) {
-        HashMap<String, String> currmap = (HashMap<String, String>) dataSnapshot.getValue();
-        if (currmap != null) {
-            this.namesAndId = currmap;
-        } else {
-            this.namesAndId = new HashMap<>();
-        }
-    }
+//    public void getMap(DataSnapshot dataSnapshot) {
+//        HashMap<String, String> currmap = (HashMap<String, String>) dataSnapshot.getValue();
+//        if (currmap != null) {
+//            this.namesAndId = currmap;
+//        } else {
+//            this.namesAndId = new HashMap<>();
+//        }
+//    }
 }

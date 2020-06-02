@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="SPEED_BOX">14</integer>
+    <integer name="SPEED_ORANGE">12</integer>
+    <integer name="SPEED_PINK">20</integer>
+    <integer name="SPEED_BLACK">18</integer>
+</resources>
