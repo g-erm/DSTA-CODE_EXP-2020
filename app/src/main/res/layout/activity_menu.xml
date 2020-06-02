@@ -74,38 +74,47 @@
         android:onClick="gotoStayhome"
         android:text="Stay Home Series" />
 
-    <LinearLayout
-        android:id="@+id/helps"
+    <Button
+        android:id="@+id/friends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stayhomeButton"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
+        android:background="#AED2FF"
+        android:onClick="gotoFriends"
+        android:text="Find friends" />
+
+    <LinearLayout
+        android:id="@+id/helps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
         android:orientation="horizontal"
         android:weightSum="10">
+
         <Button
             android:id="@+id/sosButton"
             android:layout_width="0px"
-            android:layout_weight="5"
             android:layout_height="wrap_content"
             android:layout_marginRight="10sp"
+            android:layout_weight="5"
             android:background="#AED2FF"
             android:onClick="gotoSOS"
             android:text="Emergency (SOS)" />
+
         <Button
             android:id="@+id/helpButton"
             android:layout_width="0px"
-            android:layout_weight="5"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
+            android:layout_weight="5"
             android:background="#AED2FF"
             android:onClick="gotoHelp"
             android:text="Request Help" />
     </LinearLayout>
-
-
-
-
 
 
 </RelativeLayout>
