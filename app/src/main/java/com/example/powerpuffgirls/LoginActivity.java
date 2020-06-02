@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         super.onDestroy();
         if (music != null) {
             music.release();
+            music = null;
         }
     }
 

@@ -1,12 +1,15 @@
 package com.example.powerpuffgirls;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class HelpActivity extends AppCompatActivity {
 
@@ -30,6 +34,7 @@ public class HelpActivity extends AppCompatActivity {
     private MediaRecorder recorder;
     private static String fileName = null;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +43,10 @@ public class HelpActivity extends AppCompatActivity {
 //        recordButton = findViewById(R.id.recordButton);
 //        recordText = findViewById(R.id.recordText);
 
-        fileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        fileName += "/audio.";
+        fileName = getExternalCacheDir().getAbsolutePath();
+        fileName += "/audio.3gp";
+
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         ((ToggleButton)findViewById(R.id.recordButton)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -92,18 +99,26 @@ public class HelpActivity extends AppCompatActivity {
         try {
             recorder.prepare();
         } catch (IOException e) {
-            Toast.makeText(this, "IO Exception", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "IO Exception Prepare", Toast.LENGTH_SHORT).show();
         }
-        try {
+        //catch (Exception e) {
+        //    Toast.makeText(this, "Exception Prepare", Toast.LENGTH_SHORT).show();
+        //}
+
+        //try {
             recorder.start();
-        } catch (Exception e) {
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-        }
+        //} catch (Exception e) {
+        //    Toast.makeText(this, "Exception Start", Toast.LENGTH_SHORT).show();
+        //}
     }
 
     private void stopRecording() {
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+        //try {
+            recorder.stop();
+            recorder.release();
+            recorder = null;
+        //} catch (Exception e) {
+        //    Toast.makeText(this, "Recording Exception", Toast.LENGTH_SHORT).show();
+        //}
     }
 }

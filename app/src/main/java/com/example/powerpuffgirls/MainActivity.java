@@ -12,6 +12,8 @@ import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity {
 
+    MediaPlayer music;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +47,17 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
 
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        MediaPlayer music = MediaPlayer.create(this, R.raw.introsong);
+        music = MediaPlayer.create(this, R.raw.introsong);
         music.setVolume(.5f, .5f);
         if (prefs.getBoolean("splashCheck", true)) {
             music.start();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        music.release();
+        music = null;
     }
 }
