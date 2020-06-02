@@ -10,7 +10,7 @@ import static com.example.powerpuffgirls.GameView.screenRatioY;
 
 public class Flight {
     public boolean isGoingUp = false;
-    public int toShoot =0;
+    public int toShoot = 0;
     int x,y, width, height, wingCounter =0, shootCounter =0;
     Bitmap flight1, flight2, shoot1, shoot2, shoot3, shoot4, shoot5, dead;
     private GameView gameView;
