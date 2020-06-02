@@ -1,9 +1,12 @@
 package com.example.powerpuffgirls;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
 //        SharedPreferences.Editor preferencesEditor = pref.edit();
 //        preferencesEditor.clear();
 //        preferencesEditor.apply();
+
+        //Check whether GPS tracking is enabled//
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
 
         Thread thread = new Thread() {
             @Override
@@ -52,6 +61,20 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getBoolean("splashCheck", true)) {
             music.start();
         }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, GPS is required to use the app")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                });
+
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

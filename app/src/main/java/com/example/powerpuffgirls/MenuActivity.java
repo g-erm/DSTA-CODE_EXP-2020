@@ -46,13 +46,6 @@ public class MenuActivity extends AppCompatActivity {
             music.start();
         }
 
-        //Check whether GPS tracking is enabled//
-
-        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            finish();
-        }
-
         //Check whether this app has access to the location permission//
 
         int permission = ContextCompat.checkSelfPermission(this,
@@ -89,6 +82,7 @@ public class MenuActivity extends AppCompatActivity {
 //                    PERMISSIONS_REQUEST);
 //        }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
@@ -157,19 +151,27 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
+    public void gotoMusic(View view) {
+        startActivity(new Intent(MenuActivity.this, MusicActivity.class));
+    }
+
     public void gotoSettings(View view) {
         startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
     }
 
-
     public void gotoSignout(View view) {
         mAuth.signOut();
+        stopService(new Intent(this, TrackingService.class));
         startActivity(new Intent(MenuActivity.this, LoginActivity.class));
         finish();
     }
 
     public void gotoFriends(View view) {
         startActivity(new Intent(MenuActivity.this, FriendsActivity.class));
+    }
+
+    public void gotoNews(View view) {
+        startActivity(new Intent(MenuActivity.this, NewsActivity.class));
     }
 
     @Override

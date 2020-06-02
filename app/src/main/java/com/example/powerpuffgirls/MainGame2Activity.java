@@ -322,7 +322,7 @@ public class MainGame2Activity extends AppCompatActivity {
 
     }
 
-    public void restartGame(View View) {
+    public void restartGame(View view) {
         start_flg = true;
         restartButton.setVisibility(View.INVISIBLE);
         timer = new Timer();
@@ -341,7 +341,7 @@ public class MainGame2Activity extends AppCompatActivity {
         }, 0, 20);
     }
 
-    public void quitGame(View view) {
+    public void quitGame (View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             finishAndRemoveTask();
         } else {
