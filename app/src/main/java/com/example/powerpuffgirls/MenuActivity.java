@@ -167,6 +167,10 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(new Intent(MenuActivity.this, FriendsActivity.class));
     }
 
+    public void gotoNews(View view) {
+        startActivity(new Intent(MenuActivity.this, NewsActivity.class));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
