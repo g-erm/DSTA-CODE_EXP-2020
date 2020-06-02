@@ -1,7 +1,9 @@
 package com.example.powerpuffgirls;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -49,7 +51,23 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoSOS(View view) {
-        startActivity(new Intent(MenuActivity.this, SOSActivity.class));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure? Pressing 'yes' will notify all your emergency contacts")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(MenuActivity.this, SOSActivity.class));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public void gotoHelp(View view) {
@@ -77,9 +95,5 @@ public class MenuActivity extends AppCompatActivity {
         if (music != null) {
             music.release();
         }
-    }
-
-    public void gotoGame(View view) {
-        startActivity(new Intent(MenuActivity.this, MainGameActivity.class));
     }
 }

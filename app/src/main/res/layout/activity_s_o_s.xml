@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".SOSActivity">
 
-    <TextView
+    <ToggleButton
+        android:id="@+id/onOffFlashlight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SOS Activity"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textSize="30sp"/>
+        android:layout_centerVertical="true"
+        android:textOn="Turn Off"
+        android:textOff="Turn On"
+        android:checked="false"
+        android:text="Turn On/Off Camera LED/ Flashlight Android" />
 
 </RelativeLayout>
