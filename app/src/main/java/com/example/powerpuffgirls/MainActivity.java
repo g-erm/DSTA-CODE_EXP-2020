@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import java.io.FileInputStream;
 import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity {

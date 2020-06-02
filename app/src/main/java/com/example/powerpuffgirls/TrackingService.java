@@ -120,10 +120,10 @@ public class TrackingService extends Service {
                     //Get a reference to the database, so your app can perform read and write operations//
 
                     Location location = locationResult.getLastLocation();
-                    if (location != null) {
+                    if (location != null && (mAuth.getCurrentUser() != null)) {
                         //Save the location data to the database//
 
-                        //mDatabase.child("users").child(mAuth.getUid()).child(path).setValue(location);
+                        mDatabase.child("users").child(mAuth.getUid()).child(path).setValue(location);
                     }
                 }
             }, null);
