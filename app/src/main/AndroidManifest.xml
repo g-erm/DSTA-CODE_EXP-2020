@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.powerpuffgirls">
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,12 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChooseGameActivity"></activity>
+        <service
+            android:name=".TrackingService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".ChooseGameActivity" />
         <activity android:name=".WorkoutVideoActivity" />
         <activity android:name=".WorkoutActivity" />
         <activity
@@ -32,10 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".MainGameActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".GameActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainGameActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
