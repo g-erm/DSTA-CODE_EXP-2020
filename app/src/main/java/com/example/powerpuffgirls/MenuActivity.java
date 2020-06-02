@@ -174,6 +174,10 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(new Intent(MenuActivity.this, NewsActivity.class));
     }
 
+    public void gotoChat(View view) {
+        startActivity(new Intent(MenuActivity.this, ChatActivity.class));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

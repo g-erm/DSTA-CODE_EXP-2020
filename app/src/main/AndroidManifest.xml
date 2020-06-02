@@ -23,6 +23,10 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".TrackingService"
@@ -63,8 +67,7 @@
         <activity
             android:name=".NewsDetailActivity"
             android:theme="@style/AppTheme.WithActionBar" />
-        <activity android:name=".NewsActivity"/>
-
+        <activity android:name=".NewsActivity" />
     </application>
 
 </manifest>
