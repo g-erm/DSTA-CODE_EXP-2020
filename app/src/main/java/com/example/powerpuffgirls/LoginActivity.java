@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
     private FirebaseUser user;
     private DatabaseReference mDatabase;
     private MediaPlayer music;
-    public ArrayList<String> allNames;
-    public ArrayList<String> allId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        // database key: firebase user.userId, val: nric
     }
 
     @Override
@@ -77,12 +74,27 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                     private static final String TAG = "CreateUser";
                     String user_name = name;
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            onAuthSuccess(task.getResult().getUser(), user_name);
+                            getValuesFromDatabase(new OnGetDataListener() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id) {
+                                    onAuthSuccess(task.getResult().getUser(), user_name, name, id);
+                                }
+
+                                @Override
+                                public void onStart() {
+                                    Log.d("ONSTART", "Started");
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    Log.d("ONFAIL", "failed");
+                                }
+                            });
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -108,7 +120,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            onAuthSuccess(task.getResult().getUser(), user_name);
                             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                             finish();
                             //pdateUI(user);
@@ -158,51 +169,44 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         }
     }
 
-    private void getValuesFromDatabase() {
-        mDatabase.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+    private void getValuesFromDatabase(final OnGetDataListener listener) {
+        listener.onStart();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getExistingData(dataSnapshot);
+                ArrayList<String> names = (ArrayList<String>) dataSnapshot.child("names").getValue();
+                ArrayList<String> ids = (ArrayList<String>) dataSnapshot.child("ids").getValue();
+                while (names == null) {
+                    try {
+                        Log.d("sleep status", "still sleeping");
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                listener.onSuccess(dataSnapshot, names, ids);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onFailure();
             }
         });
     }
 
-    private void getExistingData(DataSnapshot dataSnapshot) {
-        this.allNames = (ArrayList<String>) dataSnapshot.child("names").getValue();
-        this.allId = (ArrayList<String>) dataSnapshot.child("ids").getValue();
-    }
-
-    private void onAuthSuccess(FirebaseUser user, String name) {
+    private void onAuthSuccess(FirebaseUser user, String name, ArrayList<String> nameslist, ArrayList<String> idslist) {
         // Write new user
-        getValuesFromDatabase();
-        writeNewUser(user.getUid(), user.getEmail().substring(0, 9), name);
+        writeNewUser(user.getUid(), user.getEmail().substring(0, 9), name, nameslist, idslist);
     }
 
-    private void writeNewUser(String userId, String nric, String name) {
+    private void writeNewUser(String userId, String nric, String name, ArrayList<String> nameslist, ArrayList<String> idslist) {
         //User user = new User(nric);
 
-        ArrayList<String> names = new ArrayList<>();
-        if (this.allNames != null) {
-            for (String s : this.allNames) {
-                names.add(s);
-            }
-        }
-        names.add(name);
+        nameslist.add(name);
+        idslist.add(userId);
 
-        ArrayList<String> id = new ArrayList<>();
-        if (this.allId != null) {
-            for (String s : this.allId) {
-                id.add(s);
-            }
-        }
-        id.add(userId);
-
-        mDatabase.child("names").setValue(names);
-        mDatabase.child("ids").setValue(id);
+        mDatabase.child("names").setValue(nameslist);
+        mDatabase.child("ids").setValue(idslist);
         mDatabase.child("users").child(userId).child("profile").child("nric").setValue(nric);
         mDatabase.child("users").child(userId).child("profile").child("name").setValue(name);
     }

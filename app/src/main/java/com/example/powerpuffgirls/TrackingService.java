@@ -123,7 +123,7 @@ public class TrackingService extends Service {
                     if (location != null) {
                         //Save the location data to the database//
 
-                        mDatabase.child("users").child(mAuth.getUid()).child(path).setValue(location);
+                        //mDatabase.child("users").child(mAuth.getUid()).child(path).setValue(location);
                     }
                 }
             }, null);
