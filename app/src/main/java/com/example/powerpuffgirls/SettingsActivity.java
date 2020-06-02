@@ -37,10 +37,11 @@ public class SettingsActivity extends AppCompatActivity {
             ((Switch)findViewById(R.id.menuSound)).setChecked(prefs.getBoolean("menuCheck", true));
         }
         if (prefs.contains("loginVolume")) {
+            ((SeekBar)findViewById(R.id.seekLogin)).setProgress((int) (prefs.getFloat("loginVolume", 0.5f)*100));
         }
         if (prefs.contains("menuVolume")) {
+            ((SeekBar)findViewById(R.id.seekMenu)).setProgress((int) (prefs.getFloat("menuVolume", 0.5f)*100));
         }
-//        findViewById(R.id.splashSound).setOnCheckedChangeListener
 
         ((Switch)findViewById(R.id.splashSound)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,26 +76,29 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 float vol = ((float)progress)/100f;
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                editor.putFloat("loginVolume", ((float)seekBar.getProgress())/100f);
+                editor.apply();
+            }
+        });
+
+        ((SeekBar)findViewById(R.id.seekMenu)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float vol = ((float)progress)/100f;
                 MenuActivity.music.setVolume(vol,vol);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                editor.putFloat("menuCheck", ((float)seekBar.getProgress())/100f);
+                editor.putFloat("menuVolume", ((float)seekBar.getProgress())/100f);
                 editor.apply();
             }
         });
-
-//        SeekBar tuner = findViewById(R.id.seekBar);
-//        tuner.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//            }
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {}
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {}
-//        });
     }
 }

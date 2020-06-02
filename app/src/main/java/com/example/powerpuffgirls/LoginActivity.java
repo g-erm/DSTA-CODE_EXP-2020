@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,10 +50,14 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
             startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             finish();
         } else {
+            SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
             music = MediaPlayer.create(this, R.raw.loginsound);
             music.setLooping(true);
-            music.setVolume(0.5f, 0.5f);
-            music.start();
+            float vol = prefs.getFloat("loginVolume", 0.5f);
+            music.setVolume(vol,vol);
+            if (prefs.getBoolean("loginCheck", true)) {
+                music.start();
+            }
         }
         // updateUI(currentUser);
     }

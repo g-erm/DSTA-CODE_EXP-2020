@@ -3,9 +3,12 @@ package com.example.powerpuffgirls;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
+import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        SharedPreferences pref = getSharedPreferences("settings", MODE_PRIVATE);
+//        SharedPreferences.Editor preferencesEditor = pref.edit();
+//        preferencesEditor.clear();
+//        preferencesEditor.apply();
 
         Thread thread = new Thread() {
             @Override
@@ -35,8 +43,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         thread.start();
+
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         MediaPlayer music = MediaPlayer.create(this, R.raw.introsong);
-        music.setVolume(.8f, .8f);
-        music.start();
+        music.setVolume(.5f, .5f);
+        if (prefs.getBoolean("menuCheck", true)) {
+            music.start();
+        }
     }
 }
