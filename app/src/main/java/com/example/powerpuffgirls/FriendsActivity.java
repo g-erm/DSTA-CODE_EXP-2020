@@ -3,17 +3,12 @@ package com.example.powerpuffgirls;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Handler;
 import android.util.Log;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.KeyEvent;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.ListView;
 
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
