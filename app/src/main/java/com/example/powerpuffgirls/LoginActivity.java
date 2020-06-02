@@ -16,6 +16,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -205,10 +206,15 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         nameslist.add(name);
         idslist.add(userId);
 
+        String eContact1 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
+        String eContact2 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
+
         mDatabase.child("names").setValue(nameslist);
         mDatabase.child("ids").setValue(idslist);
         mDatabase.child("users").child(userId).child("profile").child("nric").setValue(nric);
         mDatabase.child("users").child(userId).child("profile").child("name").setValue(name);
+        mDatabase.child("users").child(userId).child("profile").child("emergency 1").setValue(eContact1);
+        mDatabase.child("users").child(userId).child("profile").child("emergency 2").setValue(eContact2);
     }
 
 }
