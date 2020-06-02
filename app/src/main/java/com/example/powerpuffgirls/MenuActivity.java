@@ -46,13 +46,6 @@ public class MenuActivity extends AppCompatActivity {
             music.start();
         }
 
-        //Check whether GPS tracking is enabled//
-
-        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            finish();
-        }
-
         //Check whether this app has access to the location permission//
 
         int permission = ContextCompat.checkSelfPermission(this,
@@ -89,6 +82,7 @@ public class MenuActivity extends AppCompatActivity {
 //                    PERMISSIONS_REQUEST);
 //        }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
