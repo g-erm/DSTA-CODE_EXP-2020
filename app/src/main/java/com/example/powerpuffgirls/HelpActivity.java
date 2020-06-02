@@ -32,13 +32,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.security.Timestamp;
@@ -171,7 +174,7 @@ public class HelpActivity extends AppCompatActivity {
         String format = simpleDateFormat.format(new Date());
 
         Uri file = Uri.fromFile(new File(fileName));
-        String filepath = "AudioHelps/" + nric + " on " + format + "hrs";
+        String filepath = "AudioHelps/" + nric + " on " + format + "hrs.3gp";
         mStorageRef.child(filepath).putFile(file)
             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -191,6 +194,7 @@ public class HelpActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void uploadText(View view) {
         String text = editText.getText().toString();
         FileOutputStream fos = null;
@@ -208,9 +212,9 @@ public class HelpActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
         String format = simpleDateFormat.format(new Date());
 
-        Uri file = Uri.fromFile(new File(getFilesDir().toString() + "/" + textFile));
-        String filepath = "TextHelps/"+ nric + " on " + format + "hrs";
-        mStorageRef.child(filepath).putFile(file)
+        Uri fileUpload = Uri.fromFile(new File(getFilesDir().toString() + "/" + textFile));
+        String filepath = "TextHelps/"+ nric + " on " + format + "hrs.txt";
+        mStorageRef.child(filepath).putFile(fileUpload)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
