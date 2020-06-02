@@ -39,11 +39,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 
     implementation 'com.google.firebase:firebase-analytics:17.4.2'
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 
+<<<<<<< HEAD
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
@@ -58,4 +61,7 @@ dependencies {
 
 //Times Formater
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+=======
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+>>>>>>> 3bff9ed... music
 }
