@@ -49,6 +49,9 @@
         <activity
             android:name=".MainGameActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainGame2Activity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

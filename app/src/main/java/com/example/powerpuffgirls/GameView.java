@@ -38,7 +38,7 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(GameActivity activity , int screenX, int screenY) {
         super(activity);
 
-        this.activity = this.activity;
+        this.activity = activity;
 
         prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
 

@@ -20,6 +20,6 @@ public class ChooseGameActivity extends AppCompatActivity {
     }
 
     public void gotoGame2(View view) {
-        //startActivity(new Intent(ChooseGameActivity.this, WorkoutActivity.class));
+        startActivity(new Intent(ChooseGameActivity.this, MainGame2Activity.class));
     }
 }

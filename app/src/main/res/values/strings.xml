@@ -6,4 +6,10 @@
     <string name="vol">vol</string>
     <string name="game_1">Game 1</string>
     <string name="game_2">Game 2</string>
+    <string name="score">Score: %d</string>
+    <string name="avoid_the_virus">Avoid The Virus!</string>
+    <string name="highScore">High Score: %d</string>
+    <string name="start">START</string>
+    <string name="quit">QUIT</string>
+    <string name="Restart">Restart</string>
 </resources>
