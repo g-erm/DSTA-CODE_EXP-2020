@@ -32,7 +32,7 @@ public class FriendsActivity extends AppCompatActivity {
     ListView myList;
 
     ArrayList<String> allId;
-    ArrayList<String> allNames = new ArrayList<>();
+    ArrayList<String> allNames;
     ArrayAdapter<String> adapter;
 
     public HashMap<String, String> namesAndId = new HashMap<>();
@@ -45,38 +45,46 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         mySearchView = (SearchView)findViewById(R.id.searchView);
         myList = (ListView)findViewById(R.id.friendsList);
 
-        allNames.add("bob");
-        allNames.add("sally");
-        allNames.add("parry");
-        allNames.add("alicia");
-        allNames.add("amelia");
-        allNames.add("fiona");
-        allNames.add("cheryl");
-        allNames.add("jolene");
-        allNames.add("megan");
+//        allNames.add("bob");
+//        allNames.add("sally");
+//        allNames.add("parry");
+//        allNames.add("alicia");
+//        allNames.add("amelia");
+//        allNames.add("fiona");
+//        allNames.add("cheryl");
+//        allNames.add("jolene");
+//        allNames.add("megan");
 
-//        mDatabase.child("names").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                getMap(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
+        mDatabase.child("names").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getExistingData(dataSnapshot);
+            }
 
-//        if (!this.namesAndId.isEmpty()) {
-//            this.allNames = new ArrayList<>(this.namesAndId.keySet());
-//        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.allNames);
+        ArrayList<String> names = new ArrayList<>();
+        if (this.allNames == null) {
+            this.allNames = new ArrayList<>();
+        } else {
+            for (String s : this.allNames) {
+                names.add(s);
+            }
+        }
+
+        System.out.println(names);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
         myList.setAdapter(adapter);
-
-        //String name = mySearchView.getQuery().toString();
 
         mySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -93,12 +101,10 @@ public class FriendsActivity extends AppCompatActivity {
         });
     }
 
-//    public void getMap(DataSnapshot dataSnapshot) {
-//        HashMap<String, String> currmap = (HashMap<String, String>) dataSnapshot.getValue();
-//        if (currmap != null) {
-//            this.namesAndId = currmap;
-//        } else {
-//            this.namesAndId = new HashMap<>();
-//        }
-//    }
+    private void getExistingData(DataSnapshot dataSnapshot) {
+        this.allNames = (ArrayList<String>) dataSnapshot.child("names").getValue();
+        this.allId = (ArrayList<String>) dataSnapshot.child("ids").getValue();
+        System.out.println(this.allNames);
+    }
+
 }

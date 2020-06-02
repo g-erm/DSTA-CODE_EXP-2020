@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
     private FirebaseUser user;
     private DatabaseReference mDatabase;
     private MediaPlayer music;
-    private ArrayList<String> allId = new ArrayList<>();
-    public HashMap<String, String> namesAndId = new HashMap<>();
+    public ArrayList<String> allNames;
+    public ArrayList<String> allId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        getValuesFromDatabase();
         // database key: firebase user.userId, val: nric
     }
 
@@ -163,7 +162,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         mDatabase.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getExistingMap(dataSnapshot);
+                getExistingData(dataSnapshot);
             }
 
             @Override
@@ -172,22 +171,38 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         });
     }
 
-    private void getExistingMap(DataSnapshot dataSnapshot) {
-        this.namesAndId = (HashMap<String, String>) dataSnapshot.child("names").getValue();
+    private void getExistingData(DataSnapshot dataSnapshot) {
+        this.allNames = (ArrayList<String>) dataSnapshot.child("names").getValue();
+        this.allId = (ArrayList<String>) dataSnapshot.child("ids").getValue();
     }
 
     private void onAuthSuccess(FirebaseUser user, String name) {
         // Write new user
+        getValuesFromDatabase();
         writeNewUser(user.getUid(), user.getEmail().substring(0, 9), name);
     }
 
     private void writeNewUser(String userId, String nric, String name) {
         //User user = new User(nric);
 
-        if (this.namesAndId == null) { this.namesAndId = new HashMap<>(); }
-        this.namesAndId.put(name, userId);
+        ArrayList<String> names = new ArrayList<>();
+        if (this.allNames != null) {
+            for (String s : this.allNames) {
+                names.add(s);
+            }
+        }
+        names.add(name);
 
-        mDatabase.child("names").setValue(this.namesAndId);
+        ArrayList<String> id = new ArrayList<>();
+        if (this.allId != null) {
+            for (String s : this.allId) {
+                id.add(s);
+            }
+        }
+        id.add(userId);
+
+        mDatabase.child("names").setValue(names);
+        mDatabase.child("ids").setValue(id);
         mDatabase.child("users").child(userId).child("profile").child("nric").setValue(nric);
         mDatabase.child("users").child(userId).child("profile").child("name").setValue(name);
     }
