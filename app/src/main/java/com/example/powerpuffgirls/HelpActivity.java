@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -34,11 +40,17 @@ public class HelpActivity extends AppCompatActivity {
     private MediaRecorder recorder;
     private static String fileName = null;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 //        recordButton = findViewById(R.id.recordButton);
 //        recordText = findViewById(R.id.recordText);
@@ -51,7 +63,7 @@ public class HelpActivity extends AppCompatActivity {
         ((ToggleButton)findViewById(R.id.recordButton)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (true) {
+                if (isChecked) {
                     startRecording();
                 } else {
                     stopRecording();
@@ -114,11 +126,18 @@ public class HelpActivity extends AppCompatActivity {
 
     private void stopRecording() {
         //try {
-            recorder.stop();
-            recorder.release();
-            recorder = null;
+        recorder.stop();
+        recorder.release();
+        recorder = null;
         //} catch (Exception e) {
         //    Toast.makeText(this, "Recording Exception", Toast.LENGTH_SHORT).show();
         //}
+        uploadAudio();
+    }
+
+    private void uploadAudio() {
+        Uri uri = Uri.fromFile(new File(fileName));
+        mDatabase.child("users").child(mAuth.getUid()).child("AudioHelp").setValue("test");
+        Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
     }
 }
