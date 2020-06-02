@@ -14,4 +14,5 @@ public class ContactTracingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_tracing);
     }
 
+
 }

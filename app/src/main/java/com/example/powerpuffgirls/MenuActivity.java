@@ -3,6 +3,7 @@ package com.example.powerpuffgirls;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    MediaPlayer music;
+    public static MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,15 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
 
+        final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+
         music = MediaPlayer.create(this, R.raw.wamengti);
         music.setLooping(true);
-        music.setVolume(0.2f, 0.2f);
-        music.start();
+        float vol = prefs.getFloat("menuVolume", 0.5f);
+        music.setVolume(vol,vol);
+        if (prefs.getBoolean("menuCheck", true)) {
+            music.start();
+        }
     }
 
     public void gotoTrace(View view) {
