@@ -1,8 +1,10 @@
 package com.example.powerpuffgirls;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,7 +51,6 @@ public class DeclarationActivity extends AppCompatActivity {
         final EditText name = (EditText) findViewById(R.id.fullname);
         final EditText departure = (EditText) findViewById(R.id.departure);
         final EditText returnDate = (EditText) findViewById(R.id.returnDate);
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

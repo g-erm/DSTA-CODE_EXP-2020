@@ -61,6 +61,10 @@ public class MenuActivity extends AppCompatActivity {
         finish();
     }
 
+    public void gotoFriends(View view) {
+        startActivity(new Intent(MenuActivity.this, FriendsActivity.class));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

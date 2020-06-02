@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
     private void writeNewUser(String userId, String nric) {
         //User user = new User(nric);
 
-        mDatabase.child("users").child(userId).setValue(nric);
+        mDatabase.child("users").child(userId).child("nric").setValue(nric);
     }
 
 }
