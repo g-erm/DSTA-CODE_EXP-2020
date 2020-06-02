@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -18,16 +19,31 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class HelpActivity extends AppCompatActivity {
@@ -39,9 +55,16 @@ public class HelpActivity extends AppCompatActivity {
 
     private MediaRecorder recorder;
     private static String fileName = null;
+    private String nric;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    private StorageReference mStorageRef;
+
+
+    private static final String textFile =  "example.txt";
+    EditText editText;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -49,8 +72,11 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
+        editText = findViewById(R.id.info);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
 //        recordButton = findViewById(R.id.recordButton);
 //        recordText = findViewById(R.id.recordText);
@@ -68,6 +94,17 @@ public class HelpActivity extends AppCompatActivity {
                 } else {
                     stopRecording();
                 }
+            }
+        });
+
+        mDatabase.child("users").child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Retrieve NRIC Fail", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -113,31 +150,92 @@ public class HelpActivity extends AppCompatActivity {
         } catch (IOException e) {
             Toast.makeText(this, "IO Exception Prepare", Toast.LENGTH_SHORT).show();
         }
-        //catch (Exception e) {
-        //    Toast.makeText(this, "Exception Prepare", Toast.LENGTH_SHORT).show();
-        //}
-
-        //try {
-            recorder.start();
-        //} catch (Exception e) {
-        //    Toast.makeText(this, "Exception Start", Toast.LENGTH_SHORT).show();
-        //}
+        recorder.start();
     }
 
     private void stopRecording() {
-        //try {
         recorder.stop();
         recorder.release();
         recorder = null;
-        //} catch (Exception e) {
-        //    Toast.makeText(this, "Recording Exception", Toast.LENGTH_SHORT).show();
-        //}
         uploadAudio();
     }
 
+    protected void showData (DataSnapshot dataSnapshot) {
+        nric = dataSnapshot.child("nric").getValue().toString();
+    }
+
     private void uploadAudio() {
-        Uri uri = Uri.fromFile(new File(fileName));
-        mDatabase.child("users").child(mAuth.getUid()).child("AudioHelp").setValue("test");
-        Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
+        String format = simpleDateFormat.format(new Date());
+
+        Uri file = Uri.fromFile(new File(fileName));
+        String filepath = "AudioHelps/" + nric + " on " + format + "hrs";
+        mStorageRef.child(filepath).putFile(file)
+            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // Get a URL to the uploaded content
+                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    Toast.makeText(getApplicationContext(), "Success Upload", Toast.LENGTH_SHORT).show();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Toast.makeText(getApplicationContext(), "Fail Upload", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+    }
+
+    public void uploadText(View view) {
+        String text = editText.getText().toString();
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(textFile, MODE_PRIVATE);
+            fos.write(text.getBytes());
+            editText.getText().clear();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
+        String format = simpleDateFormat.format(new Date());
+
+        Uri file = Uri.fromFile(new File(getFilesDir().toString() + "/" + textFile));
+        String filepath = "TextHelps/"+ nric + " on " + format + "hrs";
+        mStorageRef.child(filepath).putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Toast.makeText(getApplicationContext(), "Success Upload Text", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        Toast.makeText(getApplicationContext(), "Fail Upload Text", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+    private void writeToFile(String data, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 }
