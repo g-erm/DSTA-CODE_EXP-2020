@@ -24,6 +24,7 @@
         <activity android:name=".ContactTracingActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".FriendsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
