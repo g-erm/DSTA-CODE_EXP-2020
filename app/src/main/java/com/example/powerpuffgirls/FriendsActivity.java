@@ -3,27 +3,28 @@ package com.example.powerpuffgirls;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
+import android.util.Log;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.view.View;
+import android.view.ActionMode;
+import android.view.KeyEvent;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.ListView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.security.auth.callback.Callback;
 
 public class FriendsActivity extends AppCompatActivity {
     private static final String TAG = "FriendsActivity";
@@ -51,37 +52,52 @@ public class FriendsActivity extends AppCompatActivity {
         mySearchView = (SearchView)findViewById(R.id.searchView);
         myList = (ListView)findViewById(R.id.friendsList);
 
-//        allNames.add("bob");
-//        allNames.add("sally");
-//        allNames.add("parry");
-//        allNames.add("alicia");
-//        allNames.add("amelia");
-//        allNames.add("fiona");
-//        allNames.add("cheryl");
-//        allNames.add("jolene");
-//        allNames.add("megan");
+        getData(new OnGetDataListener() {
 
-        mDatabase.child("names").addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id) {
+                createList(name);
+            }
+
+            @Override
+            public void onStart() {
+                Log.d("ONSTART", "Started");
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d("ONFAIL", "failed");
+            }
+        });
+    }
+
+    public void getData(final OnGetDataListener listener) {
+        listener.onStart();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getExistingData(dataSnapshot);
+                ArrayList<String> names = (ArrayList<String>) dataSnapshot.child("names").getValue();
+                ArrayList<String> ids = (ArrayList<String>) dataSnapshot.child("ids").getValue();
+                while (names == null && names.isEmpty()) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                listener.onSuccess(dataSnapshot, names, ids);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onFailure();
             }
         });
+    }
 
-        ArrayList<String> names = new ArrayList<>();
-        if (this.allNames == null) {
-            this.allNames = new ArrayList<>();
-        } else {
-            for (String s : this.allNames) {
-                names.add(s);
-            }
-        }
+    public void createList(ArrayList<String> names) {
 
-        System.out.println(names);
+        Log.d("list of names", names.toString());
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
         myList.setAdapter(adapter);
@@ -94,17 +110,10 @@ public class FriendsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 adapter.getFilter().filter(newText);
                 return false;
             }
         });
-    }
-
-    private void getExistingData(DataSnapshot dataSnapshot) {
-        this.allNames = (ArrayList<String>) dataSnapshot.child("names").getValue();
-        this.allId = (ArrayList<String>) dataSnapshot.child("ids").getValue();
-        System.out.println(this.allNames);
     }
 
 }
