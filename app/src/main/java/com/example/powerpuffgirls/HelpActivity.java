@@ -50,8 +50,9 @@ public class HelpActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Debug Audio";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-//    private Button recordButton;
-//    private TextView recordText;
+
+    private Button recordButton;
+    private TextView recordText;
 
     private MediaRecorder recorder;
     private static String fileName = null;
@@ -78,24 +79,24 @@ public class HelpActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-//        recordButton = findViewById(R.id.recordButton);
-//        recordText = findViewById(R.id.recordText);
+        recordButton = findViewById(R.id.recordButton);
+        recordText = findViewById(R.id.recordText);
 
         fileName = getExternalCacheDir().getAbsolutePath();
         fileName += "/audio.3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
-        ((ToggleButton)findViewById(R.id.recordButton)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    startRecording();
-                } else {
-                    stopRecording();
-                }
-            }
-        });
+//        ((ToggleButton)findViewById(R.id.recordButton)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    startRecording();
+//                } else {
+//                    stopRecording();
+//                }
+//            }
+//        });
 
         mDatabase.child("users").child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -108,19 +109,19 @@ public class HelpActivity extends AppCompatActivity {
             }
         });
 
-//        recordButton.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                    startRecording();
-//                    recordText.setText("Recording Started...");
-//                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    stopRecording();
-//                    recordText.setText("Recording Stopped...");
-//                }
-//                return false;
-//            }
-//        });
+        recordButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    startRecording();
+                    recordText.setText("Recording Started...");
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    stopRecording();
+                    recordText.setText("Recording Stopped...");
+                }
+                return false;
+            }
+        });
     }
 
     private boolean permissionToRecordAccepted = false;
@@ -225,17 +226,5 @@ public class HelpActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Fail Upload Text", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-
-    private void writeToFile(String data, Context context) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
     }
 }
