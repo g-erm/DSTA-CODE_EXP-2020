@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE4FC"
     tools:context=".SettingsActivity">
 
     <Switch
         android:id="@+id/splashSound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Splash Screen Sound"
+        android:text="Splash Sound"
         android:textSize="20sp"
         android:layout_marginTop="30sp"
-        android:layout_marginRight="50sp"
+        android:layout_marginRight="40sp"
         android:textAlignment="center"
         android:gravity="center"
         android:checked="true"/>
@@ -26,7 +27,7 @@
         android:text="Login Sound"
         android:textSize="20sp"
         android:layout_marginTop="20sp"
-        android:layout_marginRight="50sp"
+        android:layout_marginRight="40sp"
         android:textAlignment="center"
         android:gravity="center"
         android:checked="true"/>
@@ -36,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginSound"
-        android:layout_marginHorizontal="50sp"
+        android:layout_marginHorizontal="40sp"
         android:max="100"
         android:minHeight="30sp"
         android:progress="50"/>
@@ -49,7 +50,7 @@
         android:text="Main Menu Song"
         android:textSize="20sp"
         android:layout_marginTop="20sp"
-        android:layout_marginRight="50sp"
+        android:layout_marginRight="40sp"
         android:textAlignment="center"
         android:gravity="center"
         android:checked="true"
@@ -60,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/menuSound"
-        android:layout_marginHorizontal="50sp"
+        android:layout_marginHorizontal="40sp"
         android:max="100"
         android:minHeight="30sp"
         android:progress="50"/>

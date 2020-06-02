@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         MediaPlayer music = MediaPlayer.create(this, R.raw.introsong);
         music.setVolume(.5f, .5f);
-        if (prefs.getBoolean("menuCheck", true)) {
+        if (prefs.getBoolean("splashCheck", true)) {
             music.start();
         }
     }
