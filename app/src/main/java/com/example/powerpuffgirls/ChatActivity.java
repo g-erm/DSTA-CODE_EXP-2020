@@ -22,7 +22,6 @@ public class ChatActivity extends AppCompatActivity {
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new FriendsListFragment(), "Friends");
-        adapter.addFragment(new ChatFragment(), "Chats");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
