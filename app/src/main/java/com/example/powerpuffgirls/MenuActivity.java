@@ -7,20 +7,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.media.MediaPlayer;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +36,6 @@ public class MenuActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     public static MediaPlayer music;
 
-    TextView welcomeText;
     private String name = "";
     private String eContact1 = "";
     private String eContact2 = "";
@@ -88,7 +81,6 @@ public class MenuActivity extends AppCompatActivity {
             music.start();
         }
 
-
         //Check whether this app has access to the location permission//
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -101,7 +93,6 @@ public class MenuActivity extends AppCompatActivity {
                 public void onSuccess(Location location) {
                     if(location != null && (mAuth.getCurrentUser() != null)) {
                         mDatabase.child("users").child(mAuth.getUid()).child("locationList").push().setValue(location);
-
                     }
                 }
             });
@@ -135,28 +126,20 @@ public class MenuActivity extends AppCompatActivity {
             grantResults) {
 
         //If the permission has been granted...//
-
         if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
             //...then start the GPS tracking service//
-
             startTrackerService();
         } else {
-
             //If the user denies the permission request, then display a toast with some more information//
-
             Toast.makeText(this, "Please enable location services to allow GPS tracking", Toast.LENGTH_SHORT).show();
         }
     }
 
 //Start the TrackerService//
-
     private void startTrackerService() {
         startService(new Intent(this, TrackingService.class));
-
         //Notify the user that tracking has been enabled//
-
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
 
     }
