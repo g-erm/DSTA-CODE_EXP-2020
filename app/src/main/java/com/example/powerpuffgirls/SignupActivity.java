@@ -39,10 +39,10 @@ public class SignupActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.99), (int)(height*.99));
+//        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//
+//        getWindow().setLayout((int)(width), (int)(height*1));
     }
 
     public void signUp(View v) {
@@ -60,6 +60,10 @@ public class SignupActivity extends AppCompatActivity {
             return;
         } else if (eContact2.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty Secondary Contact",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (NRIC.length() != 9) {
+            Toast.makeText(getApplicationContext(), "Incorrect NRIC Length",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -110,6 +114,9 @@ public class SignupActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
                                     onAuthSuccess(task.getResult().getUser(), user_name, name, id, eContact1, eContact2);
+                                    finish();
+                                    Toast.makeText(SignupActivity.this, "Proceed to login.",
+                                            Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -161,5 +168,9 @@ public class SignupActivity extends AppCompatActivity {
                 listener.onFailure();
             }
         });
+    }
+
+    public void back(View view) {
+        finish();
     }
 }
