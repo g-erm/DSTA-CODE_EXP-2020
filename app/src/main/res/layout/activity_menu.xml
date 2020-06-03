@@ -50,7 +50,8 @@
         android:layout_marginTop="30sp"
         android:background="#AED2FF"
         android:onClick="gotoNews"
-        android:text="Latest Top COVID-19 News" />
+        android:text="Latest Top\nCOVID-19 News"
+        android:textSize="25sp"/>
 
     <Button
         android:id="@+id/gameButton"
@@ -61,18 +62,8 @@
         android:layout_marginTop="20sp"
         android:layout_below="@id/news"
         android:onClick="gotoGame"
-        android:text="Play a Game!" />
-
-    <Button
-        android:id="@+id/friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
-        android:background="#AED2FF"
-        android:onClick="gotoFriends"
-        android:text="Find friends"
-        android:visibility="invisible"/>
+        android:text="Play Game"
+        android:textSize="25sp"/>
 
     <Button
         android:id="@+id/workoutButton"
@@ -83,7 +74,8 @@
         android:layout_marginTop="20sp"
         android:layout_below="@id/gameButton"
         android:onClick="gotoWorkout"
-        android:text="Do a workout!" />
+        android:text="workout"
+        android:textSize="25sp"/>
 
     <Button
         android:id="@+id/declarationButton"
@@ -94,7 +86,8 @@
         android:layout_marginTop="20sp"
         android:layout_below="@id/workoutButton"
         android:onClick="gotoDeclaration"
-        android:text="Submit Declaration" />
+        android:text="Submit\nDeclaration"
+        android:textSize="25sp"/>
 
     <LinearLayout
         android:id="@+id/helps"
