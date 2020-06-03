@@ -169,16 +169,8 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void gotoTrace(View view) {
-        startActivity(new Intent(MenuActivity.this, ContactTracingActivity.class));
-    }
-
     public void gotoDeclaration(View view) {
         startActivity(new Intent(MenuActivity.this, DeclarationActivity.class));
-    }
-
-    public void gotoStayhome(View view) {
-        startActivity(new Intent(MenuActivity.this, StayHomeActivity.class));
     }
 
     public void gotoSOS(View view) {
@@ -228,8 +220,12 @@ public class MenuActivity extends AppCompatActivity {
         finish();
     }
 
-    public void gotoFriends(View view) {
-        startActivity(new Intent(MenuActivity.this, FriendsActivity.class));
+    public void gotoGame(View view) {
+        startActivity(new Intent(MenuActivity.this, ChooseGameActivity.class));
+    }
+
+    public void gotoWorkout(View view) {
+        startActivity(new Intent(MenuActivity.this, WorkoutActivity.class));
     }
 
     public void gotoNews(View view) {

@@ -2,7 +2,9 @@ package com.example.powerpuffgirls;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -24,5 +26,10 @@ public class ChatActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+    public void gotoFriend(View view) {
+        startActivity(new Intent(ChatActivity.this, FriendsActivity.class));
     }
 }

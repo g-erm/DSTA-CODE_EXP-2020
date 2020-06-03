@@ -59,7 +59,9 @@
         <activity android:name=".ContactTracingActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".FriendsActivity" />
+        <activity
+            android:name=".FriendsActivity"
+            android:theme="@style/AppTheme.OverlayTheme"/>
         <activity android:name=".MusicActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

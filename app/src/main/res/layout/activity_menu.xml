@@ -42,100 +42,91 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/traceButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topPanel"
-        android:background="#AED2FF"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
-        android:onClick="gotoTrace"
-        android:text="Contract Tracing" />
-
-    <Button
-        android:id="@+id/declarationButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AED2FF"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
-        android:layout_below="@id/traceButton"
-        android:onClick="gotoDeclaration"
-        android:text="Declaration" />
-
-    <Button
-        android:id="@+id/stayhomeButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AED2FF"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
-        android:layout_below="@id/declarationButton"
-        android:onClick="gotoStayhome"
-        android:text="Stay Home Series" />
-
-    <Button
-        android:id="@+id/friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stayhomeButton"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
-        android:background="#AED2FF"
-        android:onClick="gotoFriends"
-        android:text="Find friends" />
-
-    <Button
         android:id="@+id/news"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/friends"
+        android:layout_height="100sp"
+        android:layout_below="@+id/topPanel"
         android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="30sp"
         android:background="#AED2FF"
         android:onClick="gotoNews"
         android:text="Latest Top COVID-19 News" />
 
     <Button
-        android:id="@+id/chat"
+        android:id="@+id/gameButton"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#AED2FF"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/news"
+        android:onClick="gotoGame"
+        android:text="Play a Game!" />
+
+    <Button
+        android:id="@+id/friends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/news"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
         android:background="#AED2FF"
-        android:onClick="gotoChat"
-        android:text="Chat With Friends" />
+        android:onClick="gotoFriends"
+        android:text="Find friends"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/workoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#AED2FF"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/gameButton"
+        android:onClick="gotoWorkout"
+        android:text="Do a workout!" />
+
+    <Button
+        android:id="@+id/declarationButton"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="#AED2FF"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/workoutButton"
+        android:onClick="gotoDeclaration"
+        android:text="Submit Declaration" />
 
     <LinearLayout
         android:id="@+id/helps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chat"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="100sp"
+        android:layout_marginBottom="23sp"
         android:orientation="horizontal"
         android:weightSum="10">
 
         <Button
             android:id="@+id/sosButton"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="50sp"
             android:layout_marginRight="10sp"
             android:layout_weight="5"
             android:background="#AED2FF"
             android:onClick="gotoSOS"
-            android:text="Emergency (SOS)" />
+            android:text="SOS"
+            android:textSize="30sp"/>
 
         <Button
             android:id="@+id/helpButton"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="50sp"
             android:layout_marginLeft="10sp"
             android:layout_weight="5"
             android:background="#AED2FF"
             android:onClick="gotoHelp"
-            android:text="Request Help" />
+            android:text="Help"
+            android:textSize="30sp"/>
     </LinearLayout>
 
     <Button
@@ -150,6 +141,19 @@
         android:layout_marginBottom="15dp"
         android:onClick="gotoMusic"
         android:background="@drawable/music_player"/>
+
+    <Button
+        android:id="@+id/chat"
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="10dp"
+        android:onClick="gotoChat"
+        android:background="@drawable/chat"
+        android:layout_marginStart="10dp" />
 
 
 </RelativeLayout>

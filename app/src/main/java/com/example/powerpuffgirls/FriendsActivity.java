@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -99,6 +100,14 @@ public class FriendsActivity extends AppCompatActivity {
                 listener.onFailure();
             }
         });
+
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
+//
+//        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//
+//        getWindow().setLayout((int)(width), (int)(height));
     }
 
     public void editList(ArrayList<String> names, ArrayList<String> ids, ArrayList<String> friends) {

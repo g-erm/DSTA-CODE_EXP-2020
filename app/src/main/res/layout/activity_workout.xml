@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".WorkoutActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="97dp"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="100dp"
+        android:text="Workout Time!"
+        android:textSize="32sp"
+        android:textStyle="bold"/>
+
     <NumberPicker
         android:id="@+id/np_difficulty"
         android:layout_width="412dp"
@@ -32,19 +47,7 @@
         android:text="Preferred difficulty level:"
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="97dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginTop="74dp"
-        android:text="Workout Time!"
-        android:textSize="32sp" />
+
 
     <Button
         android:id="@+id/button_select"
