@@ -55,7 +55,7 @@ public class TrackingService extends Service {
 
     private static final String TAG = TrackingService.class.getSimpleName();
     private static final String PROXIMITY_ALERT = "com.example.powerpuffgirls.ProximityAlert";
-    private static final float POINT_RADIUS = 100;
+    private static final float POINT_RADIUS = 5000;
     private static final long PROX_ALERT_EXPIRATION = -1;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -210,6 +210,8 @@ public class TrackingService extends Service {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 lm.addProximityAlert(lat, longitude, POINT_RADIUS, PROX_ALERT_EXPIRATION, proximityIntent);
+                IntentFilter filter = new IntentFilter(PROXIMITY_ALERT);
+                registerReceiver(new ProximityIntentReceiver(), filter);
             }
         }
 
