@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST = 100;
+    private static final int REQUEST_CODE = 123;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -54,6 +56,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getStaticData(dataSnapshot);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "Retrieve Static Fail", Toast.LENGTH_SHORT).show();
@@ -65,6 +68,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getLocationData(dataSnapshot);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "Retrieve Location Fail", Toast.LENGTH_SHORT).show();
@@ -76,7 +80,7 @@ public class MenuActivity extends AppCompatActivity {
         music = MediaPlayer.create(this, R.raw.wamengti);
         music.setLooping(true);
         float vol = prefs.getFloat("menuVolume", 0.5f);
-        music.setVolume(vol,vol);
+        music.setVolume(vol, vol);
         if (prefs.getBoolean("menuCheck", true)) {
             music.start();
         }
@@ -85,23 +89,54 @@ public class MenuActivity extends AppCompatActivity {
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        //If the location permission has been granted, then start the TrackerService//
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-            client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        if (ContextCompat.checkSelfPermission(MenuActivity.this
+                , Manifest.permission.ACCESS_FINE_LOCATION)
+                + ContextCompat.checkSelfPermission(MenuActivity.this
+                , Manifest.permission.SEND_SMS)
+                + ContextCompat.checkSelfPermission(MenuActivity.this
+                , Manifest.permission.RECORD_AUDIO)
+                + ContextCompat.checkSelfPermission(MenuActivity.this
+                , Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+            builder.setTitle("These permissions are required for the app to function");
+            builder.setMessage("Location Service, Send SMS, Record Audio & Camera");
+            builder.setCancelable(false)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(
+                                    MenuActivity.this, new String[]{
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.SEND_SMS,
+                                            Manifest.permission.RECORD_AUDIO,
+                                            Manifest.permission.CAMERA
+                                    }, REQUEST_CODE
+                            );
+                        }
+                    });
+            builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                 @Override
-                public void onSuccess(Location location) {
-                    if(location != null && (mAuth.getCurrentUser() != null)) {
-                        mDatabase.child("users").child(mAuth.getUid()).child("locationList").push().setValue(location);
-                    }
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    System.exit(0);
                 }
             });
-            startTrackerService();
-        } else {
-            //If the app doesn’t currently have access to the user’s location, then request access//
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            //If the location permission has been granted, then start the TrackerService//
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+                client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null && (mAuth.getCurrentUser() != null)) {
+                            mDatabase.child("users").child(mAuth.getUid()).child("locationList").push().setValue(location);
+                        }
+                    }
+                });
+                startTrackerService();
+            }
         }
     }
 

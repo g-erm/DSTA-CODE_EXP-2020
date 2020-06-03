@@ -58,21 +58,19 @@ public class SOSActivity extends AppCompatActivity {
         longitude = caller.getStringExtra("longitude");
         latitude = caller.getStringExtra("latitude");
 
-        final boolean isFlashAvailable = getApplicationContext().getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try {
-            mCameraId = mCameraManager.getCameraIdList()[0];
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-        if (isFlashAvailable) {
-            switchFlashLight(true);
-        }
-
-        if(!checkPermission(Manifest.permission.SEND_SMS)) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            final boolean isFlashAvailable = getApplicationContext().getPackageManager()
+                    .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+            mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+            try {
+                mCameraId = mCameraManager.getCameraIdList()[0];
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+            if (isFlashAvailable) {
+                switchFlashLight(true);
+            }
         }
 
         if (checkPermission(Manifest.permission.SEND_SMS)) {
@@ -97,8 +95,12 @@ public class SOSActivity extends AppCompatActivity {
         safeButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (isFlashAvailable) {
-                    switchFlashLight(false);
+                if (ContextCompat.checkSelfPermission(SOSActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (getApplicationContext().getPackageManager()
+                            .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                        switchFlashLight(false);
+                    }
                 }
                 finish();
                 return false;

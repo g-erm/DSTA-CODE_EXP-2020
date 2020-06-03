@@ -4,21 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,7 +79,7 @@ public class HelpActivity extends AppCompatActivity {
         fileName = getExternalCacheDir().getAbsolutePath();
         fileName += "/audio.3gp";
 
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+//        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         mDatabase.child("users").child(mAuth.getUid()).child("profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,31 +96,42 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    startRecording();
-                    recordText.setText("Recording Started...");
+                    if (ContextCompat.checkSelfPermission(HelpActivity.this,
+                            Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        startRecording();
+                        recordText.setText("Recording Started...");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Insufficient permission", Toast.LENGTH_SHORT).show();
+                        recordText.setText("Permission denied");
+                    }
+
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopRecording();
-                    recordText.setText("Recording Stopped...");
+                    if (ContextCompat.checkSelfPermission(HelpActivity.this,
+                            Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        stopRecording();
+                        recordText.setText("Recording Stopped...");
+                    }
+
                 }
                 return false;
             }
         });
     }
 
-    private boolean permissionToRecordAccepted = false;
-    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+//    private boolean permissionToRecordAccepted = false;
+//    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                break;
-        }
-        if (!permissionToRecordAccepted) finish();
-
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode){
+//            case REQUEST_RECORD_AUDIO_PERMISSION:
+//                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+//                break;
+//        }
+//        if (!permissionToRecordAccepted) finish();
+//
+//    }
 
     private void startRecording() {
         recorder = new MediaRecorder();
