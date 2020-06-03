@@ -70,6 +70,34 @@
             android:name=".NewsDetailActivity"
             android:theme="@style/AppTheme.WithActionBar" />
         <activity android:name=".NewsActivity" />
+        <activity android:name=".OnlineGameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity android:name=".LoginOnlineActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".TTTGameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".TTTMenuActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme"/>
     </application>
 
 </manifest>

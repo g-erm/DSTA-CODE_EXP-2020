@@ -5,4 +5,9 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+    <dimen name="width_menu_button">200dp</dimen>
+    <dimen name="size_menu_button">20sp</dimen>
+    <dimen name="size_player_sign_image">100dp</dimen>
+    <dimen name="size_game_board">320sp</dimen>
 </resources>

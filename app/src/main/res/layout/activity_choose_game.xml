@@ -31,4 +31,17 @@
         android:text="Avoid The Virus!"
         android:textSize="25sp" />
 
+    <Button
+        android:id="@+id/game3_button"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_below="@id/game2_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="25sp"
+        android:layout_marginTop="55dp"
+        android:background="#AED2FF"
+        android:onClick="gotoGame3"
+        android:text="TIC TAC TOE!"
+        android:textSize="25sp" />
+
 </RelativeLayout>

@@ -22,4 +22,8 @@ public class ChooseGameActivity extends AppCompatActivity {
     public void gotoGame2(View view) {
         startActivity(new Intent(ChooseGameActivity.this, MainGame2Activity.class));
     }
+
+    public void gotoGame3(View view) {
+        startActivity(new Intent(ChooseGameActivity.this, SplashActivity.class));
+    }
 }
