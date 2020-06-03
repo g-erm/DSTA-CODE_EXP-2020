@@ -207,7 +207,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         idslist.add(userId);
 
         String eContact1 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
-        String eContact2 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
+        String eContact2 = ((EditText)findViewById(R.id.eContact2)).getText().toString();
 
         mDatabase.child("names").setValue(nameslist);
         mDatabase.child("ids").setValue(idslist);

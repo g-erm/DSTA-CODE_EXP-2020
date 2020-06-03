@@ -73,6 +73,7 @@ public class HelpActivity extends AppCompatActivity {
     private static final String textFile =  "example.txt";
     EditText editText;
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class HelpActivity extends AppCompatActivity {
 //            }
 //        });
 
-        mDatabase.child("users").child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
@@ -177,7 +178,7 @@ public class HelpActivity extends AppCompatActivity {
         String format = simpleDateFormat.format(new Date());
 
         Uri file = Uri.fromFile(new File(fileName));
-        String filepath = "AudioHelps/" + nric + " on " + format + "hrs.3gp";
+        String filepath = "AudioHelps/" + nric + " on " + format + "hrs (GMT).3gp";
         mStorageRef.child(filepath).putFile(file)
             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -216,7 +217,7 @@ public class HelpActivity extends AppCompatActivity {
         String format = simpleDateFormat.format(new Date());
 
         Uri fileUpload = Uri.fromFile(new File(getFilesDir().toString() + "/" + textFile));
-        String filepath = "TextHelps/"+ nric + " on " + format + "hrs.txt";
+        String filepath = "TextHelps/"+ nric + " on " + format + "hrs (GMT).txt";
         mStorageRef.child(filepath).putFile(fileUpload)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override

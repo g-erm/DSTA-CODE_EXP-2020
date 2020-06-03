@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="10"
+    android:orientation="vertical"
     tools:context=".SOSActivity">
 
-    <ToggleButton
-        android:id="@+id/onOffFlashlight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textOn="Turn Off"
-        android:textOff="Turn On"
-        android:checked="false"
-        android:text="Turn On/Off Camera LED/ Flashlight Android" />
+    <Button
+        android:id="@+id/notifyButton"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="4.5"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="50sp"
+        android:background="#AED2FF"
+        android:text="Notify\nPOLICE\nNOW"
+        android:textSize="50sp"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="30sp"
+        android:textSize="30sp"
+        android:text="Tap and Hold Buttons"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/safeButton"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="4.5"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginBottom="50sp"
+        android:background="#AED2FF"
+        android:text="I am no\nlonger\nin danger"
+        android:textSize="50sp"/>
+
+</LinearLayout>
