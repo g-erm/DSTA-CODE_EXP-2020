@@ -9,10 +9,6 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
-
-import java.io.FileInputStream;
-import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,11 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        SharedPreferences pref = getSharedPreferences("settings", MODE_PRIVATE);
-//        SharedPreferences.Editor preferencesEditor = pref.edit();
-//        preferencesEditor.clear();
-//        preferencesEditor.apply();
 
         //Check whether GPS tracking is enabled//
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);

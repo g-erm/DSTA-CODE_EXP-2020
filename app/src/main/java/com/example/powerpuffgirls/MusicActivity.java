@@ -24,7 +24,7 @@ public class MusicActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.wamengti);
 
-        Button start = (Button) findViewById(R.id.PLAY);
+        Button start = findViewById(R.id.PLAY);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +39,7 @@ public class MusicActivity extends AppCompatActivity {
             }
         });
 
-        Button stop = (Button) findViewById(R.id.STOP);
+        Button stop = findViewById(R.id.STOP);
 
         stop.setOnClickListener(new View.OnClickListener() {
             @Override

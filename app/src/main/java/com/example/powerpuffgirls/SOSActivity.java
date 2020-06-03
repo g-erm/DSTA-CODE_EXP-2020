@@ -60,7 +60,6 @@ public class SOSActivity extends AppCompatActivity {
 
         final boolean isFlashAvailable = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-//        Toast.makeText(getApplicationContext(), "Flash Available: " + Boolean.toString(isFlashAvailable), Toast.LENGTH_SHORT).show();
         mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             mCameraId = mCameraManager.getCameraIdList()[0];

@@ -42,7 +42,7 @@ public class chatwithfriendsFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_chatwithfriends, container, false);
         FloatingActionButton fab =
-                (FloatingActionButton)rootView.findViewById(R.id.fab);
+                rootView.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             private String name;
@@ -50,7 +50,7 @@ public class chatwithfriendsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final String[] name = new String[1];
-                EditText input = (EditText)rootView.findViewById(R.id.input);
+                EditText input = rootView.findViewById(R.id.input);
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -78,7 +78,7 @@ public class chatwithfriendsFragment extends Fragment {
     }
 
     private void displayChatMessages() {
-        ListView listOfMessages = (ListView)rootView.findViewById(R.id.list_of_messages);
+        ListView listOfMessages = rootView.findViewById(R.id.list_of_messages);
 
         Query query = mDatabase.child("messages").orderByKey();
 
@@ -94,9 +94,9 @@ public class chatwithfriendsFragment extends Fragment {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
                 // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
+                TextView messageText = v.findViewById(R.id.message_text);
+                TextView messageUser = v.findViewById(R.id.message_user);
+                TextView messageTime = v.findViewById(R.id.message_time);
 
                 // Set their text
                 messageText.setText(model.getMessageText());

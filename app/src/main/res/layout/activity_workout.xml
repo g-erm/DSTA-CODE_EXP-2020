@@ -7,55 +7,42 @@
     tools:context=".WorkoutActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/workoutText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="97dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:text="Workout Time!"
-        android:textSize="32sp"
-        android:textStyle="bold"/>
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/textDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/workoutText"
+        android:text="Preferred difficulty level:"
+        android:textSize="25sp" />
 
     <NumberPicker
         android:id="@+id/np_difficulty"
-        android:layout_width="412dp"
+        android:layout_width="260sp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="258dp"
-        android:layout_marginEnd="0dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
-        android:layout_marginTop="213dp"
-        android:layout_marginEnd="43dp"
-        android:text="Preferred difficulty level:"
-        android:textSize="24sp" />
-
-
+        android:layout_below="@id/textDifficulty"
+        />
 
     <Button
         android:id="@+id/button_select"
-        android:layout_width="249dp"
+        android:layout_width="260sp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="222dp"
+        android:layout_below="@id/np_difficulty"
         android:onClick="showVideos"
         android:text="Select" />
 

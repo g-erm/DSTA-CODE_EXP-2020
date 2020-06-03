@@ -22,7 +22,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,25 +31,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 public class HelpActivity extends AppCompatActivity {
 
@@ -93,17 +83,6 @@ public class HelpActivity extends AppCompatActivity {
         fileName += "/audio.3gp";
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-
-//        ((ToggleButton)findViewById(R.id.recordButton)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    startRecording();
-//                } else {
-//                    stopRecording();
-//                }
-//            }
-//        });
 
         mDatabase.child("users").child(mAuth.getUid()).child("profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -183,8 +162,6 @@ public class HelpActivity extends AppCompatActivity {
             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Get a URL to the uploaded content
-                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     Toast.makeText(getApplicationContext(), "Success Upload", Toast.LENGTH_SHORT).show();
                 }
             })
@@ -222,8 +199,6 @@ public class HelpActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
                         Toast.makeText(getApplicationContext(), "Success Upload Text", Toast.LENGTH_SHORT).show();
                     }
                 })

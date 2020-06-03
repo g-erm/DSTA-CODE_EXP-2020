@@ -44,8 +44,8 @@ public class OnlineGameActivity extends Activity {
         requestType = getIntent().getExtras().get("request_type").toString();
         playerSession = getIntent().getExtras().get("player_session").toString();
 
-        tvPlayer1 = (TextView) findViewById(R.id.tvPlayer1);
-        tvPlayer2 = (TextView) findViewById(R.id.tvPlayer2);
+        tvPlayer1 = findViewById(R.id.tvPlayer1);
+        tvPlayer2 = findViewById(R.id.tvPlayer2);
 
         gameState = 1;
 
@@ -248,36 +248,36 @@ public class OnlineGameActivity extends Activity {
 
     void OtherPlayer(int selectedBlock) {
 
-        ImageView selectedImage = (ImageView) findViewById(R.id.iv_11);
+        ImageView selectedImage = findViewById(R.id.iv_11);
         switch (selectedBlock) {
             case 1:
-                selectedImage = (ImageView) findViewById(R.id.iv_11);
+                selectedImage = findViewById(R.id.iv_11);
                 break;
             case 2:
-                selectedImage = (ImageView) findViewById(R.id.iv_12);
+                selectedImage = findViewById(R.id.iv_12);
                 break;
             case 3:
-                selectedImage = (ImageView) findViewById(R.id.iv_13);
+                selectedImage = findViewById(R.id.iv_13);
                 break;
 
             case 4:
-                selectedImage = (ImageView) findViewById(R.id.iv_21);
+                selectedImage = findViewById(R.id.iv_21);
                 break;
             case 5:
-                selectedImage = (ImageView) findViewById(R.id.iv_22);
+                selectedImage = findViewById(R.id.iv_22);
                 break;
             case 6:
-                selectedImage = (ImageView) findViewById(R.id.iv_23);
+                selectedImage = findViewById(R.id.iv_23);
                 break;
 
             case 7:
-                selectedImage = (ImageView) findViewById(R.id.iv_31);
+                selectedImage = findViewById(R.id.iv_31);
                 break;
             case 8:
-                selectedImage = (ImageView) findViewById(R.id.iv_32);
+                selectedImage = findViewById(R.id.iv_32);
                 break;
             case 9:
-                selectedImage = (ImageView) findViewById(R.id.iv_33);
+                selectedImage = findViewById(R.id.iv_33);
                 break;
         }
 
@@ -293,17 +293,17 @@ public class OnlineGameActivity extends Activity {
         myRef.child("playing").child(playerSession).removeValue();
 
         ImageView iv;
-        iv = (ImageView) findViewById(R.id.iv_11); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_12); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_13); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_11); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_12); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_13); iv.setImageResource(0); iv.setEnabled(true);
 
-        iv = (ImageView) findViewById(R.id.iv_21); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_22); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_23); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_21); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_22); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_23); iv.setImageResource(0); iv.setEnabled(true);
 
-        iv = (ImageView) findViewById(R.id.iv_31); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_32); iv.setImageResource(0); iv.setEnabled(true);
-        iv = (ImageView) findViewById(R.id.iv_33); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_31); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_32); iv.setImageResource(0); iv.setEnabled(true);
+        iv = findViewById(R.id.iv_33); iv.setImageResource(0); iv.setEnabled(true);
 
     }
 
@@ -330,16 +330,16 @@ public class OnlineGameActivity extends Activity {
 
     void setEnableClick(boolean trueORfalse){
         ImageView iv;
-        iv = (ImageView) findViewById(R.id.iv_11); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_12); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_13); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_11); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_12); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_13); iv.setClickable(trueORfalse);
 
-        iv = (ImageView) findViewById(R.id.iv_21); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_22); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_23); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_21); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_22); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_23); iv.setClickable(trueORfalse);
 
-        iv = (ImageView) findViewById(R.id.iv_31); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_32); iv.setClickable(trueORfalse);
-        iv = (ImageView) findViewById(R.id.iv_33); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_31); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_32); iv.setClickable(trueORfalse);
+        iv = findViewById(R.id.iv_33); iv.setClickable(trueORfalse);
     }
 }

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,8 +53,8 @@ public class FriendsActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         currUserId = mAuth.getUid();
 
-        mySearchView = (SearchView)findViewById(R.id.searchView);
-        myList = (ListView)findViewById(R.id.friendsList);
+        mySearchView = findViewById(R.id.searchView);
+        myList = findViewById(R.id.friendsList);
 
         getData(new OnGetDataListener() {
 
@@ -100,14 +99,6 @@ public class FriendsActivity extends AppCompatActivity {
                 listener.onFailure();
             }
         });
-
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-//
-//        int width = dm.widthPixels;
-//        int height = dm.heightPixels;
-//
-//        getWindow().setLayout((int)(width), (int)(height));
     }
 
     public void editList(ArrayList<String> names, ArrayList<String> ids, ArrayList<String> friends) {
@@ -186,7 +177,7 @@ public class FriendsActivity extends AppCompatActivity {
             }
 
             //Handle TextView and display string from your list
-            TextView listOfPeople= (TextView)view.findViewById(R.id.listOfPeople);
+            TextView listOfPeople= view.findViewById(R.id.listOfPeople);
             Log.d("position", Integer.toString(position));
             Log.d("remove count", Integer.toString(removeCount));
             final String userid;
@@ -194,7 +185,7 @@ public class FriendsActivity extends AppCompatActivity {
             userid = idlist.get(position);
 
             //Handle buttons and add onClickListeners
-            Button addbtn= (Button)view.findViewById(R.id.btn);
+            Button addbtn= view.findViewById(R.id.btn);
 
             addbtn.setOnClickListener(new View.OnClickListener(){
                 @Override

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,15 +28,11 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
 
 public class LoginOnlineActivity extends Activity {
 
@@ -65,8 +60,8 @@ public class LoginOnlineActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_online);
 
-        tvSendRequest = (TextView) findViewById(R.id.tvSendRequest);
-        tvAcceptRequest = (TextView) findViewById(R.id.tvAcceptRequest);
+        tvSendRequest = findViewById(R.id.tvSendRequest);
+        tvAcceptRequest = findViewById(R.id.tvAcceptRequest);
 
         tvSendRequest.setText("Please wait...");
         tvAcceptRequest.setText("Please wait...");
@@ -74,17 +69,17 @@ public class LoginOnlineActivity extends Activity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
 
-        lv_loginUsers = (ListView) findViewById(R.id.lv_loginUsers);
+        lv_loginUsers = findViewById(R.id.lv_loginUsers);
         adpt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list_loginUsers);
         lv_loginUsers.setAdapter(adpt);
 
 
-        lv_requestedUsers = (ListView) findViewById(R.id.lv_requestedUsers);
+        lv_requestedUsers = findViewById(R.id.lv_requestedUsers);
         reqUsersAdpt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list_requestedUsers);
         lv_requestedUsers.setAdapter(reqUsersAdpt);
 
 
-        tvUserID = (TextView) findViewById(R.id.tvLoginUser);
+        tvUserID = findViewById(R.id.tvLoginUser);
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {

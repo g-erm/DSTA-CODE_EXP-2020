@@ -17,8 +17,8 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new FriendsListFragment(), "Friends");

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -35,14 +34,6 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-//        int width = dm.widthPixels;
-//        int height = dm.heightPixels;
-//
-//        getWindow().setLayout((int)(width), (int)(height*1));
     }
 
     public void signUp(View v) {
@@ -84,7 +75,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private void writeNewUser(String userId, String nric, String name, ArrayList<String> nameslist, ArrayList<String> idslist, String eContact1, String eContact2) {
         //User user = new User(nric);
-
         nameslist.add(name);
         idslist.add(userId);
 
@@ -145,7 +135,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private void getValuesFromDatabase(final OnGetDataListener listener) {
         listener.onStart();
-        final String userid = mAuth.getUid();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

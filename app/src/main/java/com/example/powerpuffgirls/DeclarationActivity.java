@@ -35,10 +35,10 @@ public class DeclarationActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countryChoices.setAdapter(adapter);
 
-        Button submit = (Button) findViewById(R.id.submit);
-        final EditText name = (EditText) findViewById(R.id.fullname);
-        final EditText departure = (EditText) findViewById(R.id.departure);
-        final EditText returnDate = (EditText) findViewById(R.id.returnDate);
+        Button submit = findViewById(R.id.submit);
+        final EditText name = findViewById(R.id.fullname);
+        final EditText departure = findViewById(R.id.departure);
+        final EditText returnDate = findViewById(R.id.returnDate);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

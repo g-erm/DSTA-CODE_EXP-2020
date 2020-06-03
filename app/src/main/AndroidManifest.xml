@@ -34,8 +34,6 @@
             android:name=".ProximityIntentReceiver"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".MessageActivity" />
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
@@ -54,9 +52,7 @@
             android:theme="@style/AppTheme.OverlayTheme" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".SOSActivity" />
-        <activity android:name=".StayHomeActivity" />
         <activity android:name=".DeclarationActivity" />
-        <activity android:name=".ContactTracingActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
         <activity
@@ -81,7 +77,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".NewsDetailActivity"
-            android:theme="@style/AppTheme.WithActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NewsActivity" />
         <activity
             android:name=".OnlineGameActivity"
