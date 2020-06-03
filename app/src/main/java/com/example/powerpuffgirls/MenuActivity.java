@@ -123,14 +123,19 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     protected void getStaticData (DataSnapshot dataSnapshot) {
-        name = dataSnapshot.child("name").getValue().toString();
-        eContact1 = dataSnapshot.child("emergency 1").getValue().toString();
-        eContact2 = dataSnapshot.child("emergency 2").getValue().toString();
+        Object nameRaw = dataSnapshot.child("name").getValue();
+        if (nameRaw != null) name = nameRaw.toString();
+        Object eContact1Raw = dataSnapshot.child("emergency 1").getValue();
+        if (eContact1Raw != null) eContact1 = eContact1Raw.toString();
+        Object eContact2Raw = dataSnapshot.child("emergency 2").getValue();
+        if (eContact2Raw != null) eContact2 = eContact2Raw.toString();
     }
 
     protected void getLocationData (DataSnapshot dataSnapshot) {
-        longitude = dataSnapshot.child("longitude").getValue().toString();
-        latitude = dataSnapshot.child("latitude").getValue().toString();
+        Object longitudeRaw = dataSnapshot.child("longitude").getValue();
+        if (longitudeRaw != null) longitude = longitudeRaw.toString();
+        Object latitudeRaw = dataSnapshot.child("latitude").getValue();
+        if (latitudeRaw != null) latitude = latitudeRaw.toString();
     }
 
     @Override
