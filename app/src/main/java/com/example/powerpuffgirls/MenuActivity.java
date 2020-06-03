@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.nfc.Tag;
@@ -23,6 +24,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -85,7 +89,6 @@ public class MenuActivity extends AppCompatActivity {
         }
 
 
-
         //Check whether this app has access to the location permission//
 
         int permission = ContextCompat.checkSelfPermission(this,
@@ -99,6 +102,16 @@ public class MenuActivity extends AppCompatActivity {
         //If the location permission has been granted, then start the TrackerService//
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
+            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+            client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null && (mAuth.getCurrentUser() != null)) {
+                        mDatabase.child("users").child(mAuth.getUid()).child("locationList").push().setValue(location);
+
+                    }
+                }
+            });
             startTrackerService();
         } else {
 
