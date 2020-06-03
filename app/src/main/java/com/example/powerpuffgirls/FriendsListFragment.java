@@ -33,6 +33,8 @@ public class FriendsListFragment extends Fragment {
 
     private View rootView;
 
+    private boolean isBack;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,6 +102,44 @@ public class FriendsListFragment extends Fragment {
 
     public void adapt(ListView listView, ArrayList<String> friends) {
         listView.setAdapter(new ListViewAdapter(getActivity(), friends));
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isBack = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isBack = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isBack) {
+            getData(new OnGetDataListener() {
+
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
+                    ArrayList<String> friendsNames = adjustIdsToNames(name, id, friends);
+                    ListView listView = (ListView)rootView.findViewById(R.id.myfriends);
+                    adapt(listView, friendsNames);
+                }
+
+                @Override
+                public void onStart() {
+                    Log.d("ONSTART", "Started");
+                }
+
+                @Override
+                public void onFailure() {
+                    Log.d("ONFAIL", "failed");
+                }
+            });
+        }
     }
 }
 
