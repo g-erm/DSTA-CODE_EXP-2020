@@ -144,7 +144,6 @@ public class TrackingService extends Service {
                     Location location = locationResult.getLastLocation();
                     if (location != null && (mAuth.getCurrentUser() != null)) {
                         //Save the location data to the database//
-
                         mDatabase.child("users").child(mAuth.getUid()).child(path).setValue(location);
                     }
                 }

@@ -18,16 +18,19 @@ public class ChooseGameActivity extends AppCompatActivity {
 
 
     public void gotoGame1(View view) {
+        if (MenuActivity.music != null)
         MenuActivity.music.pause();
         startActivity(new Intent(ChooseGameActivity.this, MainGameActivity.class));
     }
 
     public void gotoGame2(View view) {
+        if (MenuActivity.music != null)
         MenuActivity.music.pause();
         startActivity(new Intent(ChooseGameActivity.this, MainGame2Activity.class));
     }
 
     public void gotoGame3(View view) {
+        if (MenuActivity.music != null)
         MenuActivity.music.pause();
         startActivity(new Intent(ChooseGameActivity.this, SplashActivity.class));
     }

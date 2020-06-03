@@ -65,34 +65,43 @@ public class WorkoutVideoActivity extends AppCompatActivity {
         int videoNumber = choices.getValue();
         if (difficultyNum == 0) {
             if (videoNumber == 0) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=mK1q3b2jQqI");
             } else if (videoNumber == 1) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=YGRje8p5gbc");
             } else if (videoNumber == 2) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=eHXbj2Uq8mM");
             }
         } else if (difficultyNum == 1) {
             if (videoNumber == 0) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=cEOS2zoyQw4");
             } else if (videoNumber == 1) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=BNC4bi3Ucac");
             } else if (videoNumber == 2) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=Ev6yE55kYGw");
             }
         } else {
             if (videoNumber == 0) {
-                MenuActivity.music.pause();
+                if (MenuActivity.music != null)
+                    MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=2fpIva72q_k");
             } else if (videoNumber == 1) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=hcNhFTHh17s");
             } else if (videoNumber == 2) {
+                if (MenuActivity.music != null)
                 MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=uZXQuqPnp8g");
             }

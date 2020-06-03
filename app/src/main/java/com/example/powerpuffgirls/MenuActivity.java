@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,9 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MenuActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 123;
+    private static final int PERMISSIONS_REQUEST = 100;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -107,24 +112,28 @@ public class MenuActivity extends AppCompatActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+        }
 
-            //Check whether this app has access to the location permission//
-            int permission = ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION);
+        //Check whether this app has access to the location permission//
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
 
-            //If the location permission has been granted, then start the TrackerService//
-            if (permission == PackageManager.PERMISSION_GRANTED) {
-                FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-                client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null && (mAuth.getCurrentUser() != null)) {
-                            mDatabase.child("users").child(mAuth.getUid()).child("locationList").push().setValue(location);
-                        }
+        Log.d("locationLOL", Boolean.toString(permission == PackageManager.PERMISSION_GRANTED));
+
+        //If the location permission has been granted, then start the TrackerService//
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+            client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null && (mAuth.getCurrentUser() != null)) {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
+                        String format = simpleDateFormat.format(new Date()) + "hrs (GMT)";
+                        mDatabase.child("users").child(mAuth.getUid()).child("locationList").child(format).setValue(location);
                     }
-                });
-                startTrackerService();
-            }
+                }
+            });
+            startTrackerService();
         }
     }
 
@@ -165,7 +174,6 @@ public class MenuActivity extends AppCompatActivity {
         startService(new Intent(this, TrackingService.class));
         //Notify the user that tracking has been enabled//
         Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
-
     }
 
     public void gotoDeclaration(View view) {
@@ -179,6 +187,7 @@ public class MenuActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (music != null)
                         music.pause();
                         Intent sosIntent = new Intent(MenuActivity.this, SOSActivity.class);
                         sosIntent.putExtra("name", name);
@@ -200,7 +209,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoHelp(View view) {
-        music.pause();
+        if (music != null)
+            music.pause();
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
