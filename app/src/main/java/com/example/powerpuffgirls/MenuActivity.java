@@ -76,7 +76,7 @@ public class MenuActivity extends AppCompatActivity {
 
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
 
-        if (music == null) music = MediaPlayer.create(this, R.raw.wamengti);
+        music = MediaPlayer.create(this, R.raw.wamengti);
         music.setLooping(true);
         float vol = prefs.getFloat("menuVolume", 0.5f);
         music.setVolume(vol,vol);
@@ -252,7 +252,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!music.isPlaying()) {
+        final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        if (!music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
             music.start();
         }
     }
