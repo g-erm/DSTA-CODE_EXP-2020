@@ -26,18 +26,20 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.OverlayTheme" ></activity>
 
         <receiver
             android:name=".ProximityIntentReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
-        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".MessageActivity" />
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar" />
-
 
         <service
             android:name=".TrackingService"
@@ -79,12 +81,13 @@
             android:name=".NewsDetailActivity"
             android:theme="@style/AppTheme.WithActionBar" />
         <activity android:name=".NewsActivity" />
-
-        <activity android:name=".OnlineGameActivity"
+        <activity
+            android:name=".OnlineGameActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:theme="@style/AppFullScreenTheme" />
-        <activity android:name=".LoginOnlineActivity"
+        <activity
+            android:name=".LoginOnlineActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:theme="@style/AppFullScreenTheme" />
@@ -107,8 +110,7 @@
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
-            android:theme="@style/AppFullScreenTheme"/>
-
+            android:theme="@style/AppFullScreenTheme" />
     </application>
 
 </manifest>
