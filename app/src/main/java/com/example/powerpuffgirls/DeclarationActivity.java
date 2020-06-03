@@ -63,8 +63,8 @@ public class DeclarationActivity extends AppCompatActivity {
                     return;
                 }
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss (GMT)");
-                String format = simpleDateFormat.format(new Date());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
+                String format = simpleDateFormat.format(new Date()) + " (GMT)";
 
                 mDatabase.child("users").child(mAuth.getUid()).child("travel").child(format).child("country").setValue(countryChoices.getSelectedItem().toString());
                 mDatabase.child("users").child(mAuth.getUid()).child("travel").child(format).child("departure").setValue(departureString);
@@ -92,8 +92,8 @@ public class DeclarationActivity extends AppCompatActivity {
                     return;
                 }
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy (GMT)");
-                String format = simpleDateFormat.format(new Date());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String format = simpleDateFormat.format(new Date()) + " (GMT)";
 
                 mDatabase.child("users").child(mAuth.getUid()).child("health").child(format).child("temperature").setValue(temp);
                 temperature.setText("");
