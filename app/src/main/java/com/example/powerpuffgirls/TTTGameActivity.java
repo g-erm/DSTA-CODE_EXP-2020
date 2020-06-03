@@ -1,9 +1,12 @@
 package com.example.powerpuffgirls;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -177,12 +180,9 @@ public class TTTGameActivity extends Activity {
 
     }
 
-
-
-
     void ShowAlert(String Title){
         AlertDialog.Builder b = new AlertDialog.Builder(this, R.style.TransparentDialog);
-        b.setTitle(Title)
+        final AlertDialog dialog = b.setTitle(Title)
                 .setMessage("Start a new game?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -199,6 +199,15 @@ public class TTTGameActivity extends Activity {
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .show();
+                .create();
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE);
+            }
+        });
+
+        dialog.show();
     }
 }

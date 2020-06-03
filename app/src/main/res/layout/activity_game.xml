@@ -7,7 +7,7 @@
     android:background="@drawable/woods"
     android:orientation="vertical"
     android:gravity="center_horizontal|center_vertical"
-    tools:context="com.example.tictactoe.GameActivity">
+    tools:context=".GameActivity">
 
 
 
