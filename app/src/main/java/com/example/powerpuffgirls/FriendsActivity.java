@@ -1,9 +1,11 @@
 package com.example.powerpuffgirls;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class FriendsActivity extends AppCompatActivity {
     private static final String TAG = "FriendsActivity";
@@ -38,6 +41,8 @@ public class FriendsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String currUserId;
+
+    private int removeCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,7 @@ public class FriendsActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
-                createList(name, id, friends);
+                editList(name, id, friends);
             }
 
             @Override
@@ -94,6 +99,27 @@ public class FriendsActivity extends AppCompatActivity {
                 listener.onFailure();
             }
         });
+    }
+
+    public void editList(ArrayList<String> names, ArrayList<String> ids, ArrayList<String> friends) {
+        int mypos = ids.indexOf(currUserId);
+        names.remove(mypos);
+        ids.remove(mypos);
+        int size = friends.size();
+        if (size > 1) {
+            for (String id : friends) {
+                if (ids.contains(id)) {
+                    Log.d("curr id", id);
+                    int pos = ids.indexOf(id);
+                    Log.d("index of val", Integer.toString(pos));
+                    ids.remove(pos);
+                    names.remove(pos);
+                    this.removeCount++;
+                }
+            }
+        }
+        Log.d("names list", names.toString());
+        createList(names, ids, friends);
     }
 
     public void createList(ArrayList<String> names, ArrayList<String> ids, ArrayList<String> friends) {
@@ -141,6 +167,7 @@ public class FriendsActivity extends AppCompatActivity {
             //just return 0 if your list items do not have an Id variable.
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = convertView;
@@ -151,8 +178,11 @@ public class FriendsActivity extends AppCompatActivity {
 
             //Handle TextView and display string from your list
             TextView listOfPeople= (TextView)view.findViewById(R.id.listOfPeople);
+            Log.d("position", Integer.toString(position));
+            Log.d("remove count", Integer.toString(removeCount));
+            final String userid;
             listOfPeople.setText(namelist.get(position));
-            final String userid = idlist.get(position);
+            userid = idlist.get(position);
 
             //Handle buttons and add onClickListeners
             Button addbtn= (Button)view.findViewById(R.id.btn);

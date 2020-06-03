@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         String eContact2 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
 
         ArrayList<String> test = new ArrayList<>();
-        test.add("friends");
+        test.add(userId);
         mDatabase.child("names").setValue(nameslist);
         mDatabase.child("ids").setValue(idslist);
         mDatabase.child("users").child(userId).child("friends").setValue(test);
