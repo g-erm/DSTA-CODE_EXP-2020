@@ -103,7 +103,8 @@ public class WorkoutVideoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        if (!MenuActivity.music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
+        if (MenuActivity.music != null)
+        if (!MenuActivity.music.isPlaying() && prefs.getBoolean("menuCheck", true) && MenuActivity.isPlaying) {
             MenuActivity.music.start();
         }
     }

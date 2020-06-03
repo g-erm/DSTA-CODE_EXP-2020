@@ -7,7 +7,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +15,6 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -31,12 +29,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private static final int PERMISSIONS_REQUEST = 100;
     private static final int REQUEST_CODE = 123;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    public static MediaPlayer music;
+    public static MediaPlayer music = null;
+    public static boolean isPlaying = false;
 
     private String name = "";
     private String eContact1 = "";
@@ -74,16 +72,6 @@ public class MenuActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Retrieve Location Fail", Toast.LENGTH_SHORT).show();
             }
         });
-
-        final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-
-        music = MediaPlayer.create(this, R.raw.wamengti);
-        music.setLooping(true);
-        float vol = prefs.getFloat("menuVolume", 0.5f);
-        music.setVolume(vol, vol);
-        if (prefs.getBoolean("menuCheck", true)) {
-            music.start();
-        }
 
         if (ContextCompat.checkSelfPermission(MenuActivity.this
                 , Manifest.permission.ACCESS_FINE_LOCATION)
@@ -260,7 +248,8 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        if (!music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
+        if (MenuActivity.music != null)
+        if (!music.isPlaying() && prefs.getBoolean("menuCheck", true) && isPlaying) {
             music.start();
         }
     }

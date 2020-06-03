@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 public class ChooseGameActivity extends AppCompatActivity {
@@ -35,7 +36,8 @@ public class ChooseGameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        if (!MenuActivity.music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
+        if (MenuActivity.music != null)
+        if (!MenuActivity.music.isPlaying() && prefs.getBoolean("menuCheck", true) && MenuActivity.isPlaying) {
             MenuActivity.music.start();
         }
     }
