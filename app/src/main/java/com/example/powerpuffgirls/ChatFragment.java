@@ -35,6 +35,8 @@ public class ChatFragment extends Fragment {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private String currUserId = mAuth.getUid();
 
+    private boolean isBack;
+
     private View rootView;
 
     @Nullable
@@ -47,9 +49,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
                 ArrayList<String> friendsNames = adjustIdsToNames(name, id, friends);
-                Log.d("after convert to names", friendsNames.toString());
                 ListView listView = (ListView)rootView.findViewById(R.id.mychats);
-                Log.d("listView", listView.toString());
                 adapt(listView, friendsNames);
             }
 
@@ -121,6 +121,44 @@ public class ChatFragment extends Fragment {
 //                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isBack = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isBack = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isBack) {
+            getData(new OnGetDataListener() {
+
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
+                    ArrayList<String> friendsNames = adjustIdsToNames(name, id, friends);
+                    ListView listView = (ListView) rootView.findViewById(R.id.mychats);
+                    adapt(listView, friendsNames);
+                }
+
+                @Override
+                public void onStart() {
+                    Log.d("ONSTART", "Started");
+                }
+
+                @Override
+                public void onFailure() {
+                    Log.d("ONFAIL", "failed");
+                }
+            });
+        }
     }
 }
 
