@@ -15,11 +15,14 @@
         android:id="@+id/searchView">
     </SearchView>
     <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/friendsList"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="10dp"
-        android:id="@+id/friendsList">
-
-    </ListView>
+        android:layout_height="match_parent" />
+<!--    <ListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:id="@+id/friendsList"/>-->
 
 </LinearLayout>
