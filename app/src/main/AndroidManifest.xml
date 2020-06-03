@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature android:name="android.hardware.camera2" />
 
@@ -16,6 +17,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -24,11 +26,18 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <receiver
+            android:name=".ProximityIntentReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".MessageActivity"></activity>
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar" />
+
 
         <service
             android:name=".TrackingService"
@@ -70,6 +79,7 @@
             android:name=".NewsDetailActivity"
             android:theme="@style/AppTheme.WithActionBar" />
         <activity android:name=".NewsActivity" />
+
         <activity android:name=".OnlineGameActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
@@ -98,6 +108,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:theme="@style/AppFullScreenTheme"/>
+
     </application>
 
 </manifest>
