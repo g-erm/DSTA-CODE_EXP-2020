@@ -2,63 +2,112 @@ package com.example.powerpuffgirls;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link chatwithfriendsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class chatwithfriendsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private String currUserId = mAuth.getUid();
+    private FirebaseListAdapter<ChatMessage> adapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public chatwithfriendsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment chatwithfriendsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static chatwithfriendsFragment newInstance(String param1, String param2) {
-        chatwithfriendsFragment fragment = new chatwithfriendsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chatwithfriends, container, false);
+        rootView = inflater.inflate(R.layout.fragment_chatwithfriends, container, false);
+        FloatingActionButton fab =
+                (FloatingActionButton)rootView.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            private String name;
+
+            @Override
+            public void onClick(View view) {
+                final String[] name = new String[1];
+                EditText input = (EditText)rootView.findViewById(R.id.input);
+
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        name[0] = (String) dataSnapshot.child(currUserId).child("profile").child("name").getValue();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+                // Read the input field and push a new instance
+                // of ChatMessage to the Firebase database
+                mDatabase
+                        .child("messages")
+                        .setValue(new ChatMessage(input.getText().toString(), name[0]));
+
+                // Clear the input
+                input.setText("");
+            }
+        });
+        displayChatMessages();
+        return rootView;
     }
+
+    private void displayChatMessages() {
+        ListView listOfMessages = (ListView)rootView.findViewById(R.id.list_of_messages);
+
+        Query query = mDatabase.child("messages").orderByKey();
+
+        FirebaseListOptions<ChatMessage> options = new FirebaseListOptions.Builder<ChatMessage>()
+                .setLayout(R.layout.message)
+                .setQuery(query, ChatMessage.class)
+                .build();
+
+
+//        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
+//                R.layout.message, mDatabase) {
+        adapter = new FirebaseListAdapter<ChatMessage>(options) {
+            @Override
+            protected void populateView(View v, ChatMessage model, int position) {
+                // Get references to the views of message.xml
+                TextView messageText = (TextView)v.findViewById(R.id.message_text);
+                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
+                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
+
+                // Set their text
+                messageText.setText(model.getMessageText());
+                messageUser.setText(model.getMessageUser());
+
+                // Format the date before showing it
+                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                        model.getMessageTime()));
+            }
+        };
+        listOfMessages.setAdapter(adapter);
+    }
+
 }

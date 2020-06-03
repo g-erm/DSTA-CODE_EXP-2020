@@ -43,9 +43,7 @@ public class FriendsListFragment extends Fragment {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
                 ArrayList<String> friendsNames = adjustIdsToNames(name, id, friends);
-                Log.d("after convert to names", friendsNames.toString());
                 ListView listView = (ListView)rootView.findViewById(R.id.myfriends);
-                Log.d("listView", listView.toString());
                 adapt(listView, friendsNames);
             }
 
@@ -101,7 +99,6 @@ public class FriendsListFragment extends Fragment {
     }
 
     public void adapt(ListView listView, ArrayList<String> friends) {
-        Log.d("act", getActivity().toString());
         listView.setAdapter(new ListViewAdapter(getActivity(), friends));
     }
 }

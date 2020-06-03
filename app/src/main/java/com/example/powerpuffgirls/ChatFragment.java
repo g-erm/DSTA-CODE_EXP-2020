@@ -3,6 +3,8 @@ package com.example.powerpuffgirls;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -109,9 +111,14 @@ public class ChatFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object o = listView.getItemAtPosition(position);
-                String str = (String) o;
-                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mychats, new chatwithfriendsFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+//                Object o = listView.getItemAtPosition(position);
+//                String str = (String) o;
+//                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
             }
         });
     }
