@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/woods"
-    tools:context="com.example.tictactoe.LoginOnlineActivity">
+    tools:context=".LoginOnlineActivity">
 
 
     <TextView
@@ -18,7 +18,8 @@
         android:text="ID"
         android:textColor="#FFFFFF"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:gravity="center_horizontal" />
 
 
     <LinearLayout

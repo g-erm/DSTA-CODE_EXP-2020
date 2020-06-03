@@ -11,7 +11,7 @@
     android:layout_weight="1"
     android:padding="5dp"
     android:background="@drawable/woods"
-    tools:context="com.example.tictactoe.MenuActivity">
+    tools:context=".MenuActivity">
 
 
     <mehdi.sakout.fancybuttons.FancyButton

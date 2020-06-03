@@ -188,6 +188,7 @@ public class MenuActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        music.pause();
                         Intent sosIntent = new Intent(MenuActivity.this, SOSActivity.class);
                         sosIntent.putExtra("name", name);
                         sosIntent.putExtra("eContact1", eContact1);
@@ -208,6 +209,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoHelp(View view) {
+        music.pause();
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
@@ -244,6 +246,15 @@ public class MenuActivity extends AppCompatActivity {
         if (music != null) {
             music.release();
             music = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        if (!music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
+            music.start();
         }
     }
 }
