@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                             FirebaseUser user = mAuth.getCurrentUser();
                             getValuesFromDatabase(new OnGetDataListener() {
                                 @Override
-                                public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id) {
+                                public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
                                     onAuthSuccess(task.getResult().getUser(), user_name, name, id);
                                 }
 
@@ -172,12 +172,13 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
 
     private void getValuesFromDatabase(final OnGetDataListener listener) {
         listener.onStart();
+        final String userid = mAuth.getUid();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> names = (ArrayList<String>) dataSnapshot.child("names").getValue();
                 ArrayList<String> ids = (ArrayList<String>) dataSnapshot.child("ids").getValue();
-                while (names == null) {
+                while (names == null && ids == null) {
                     try {
                         Log.d("sleep status", "still sleeping");
                         Thread.sleep(5000);
@@ -185,7 +186,8 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                         e.printStackTrace();
                     }
                 }
-                listener.onSuccess(dataSnapshot, names, ids);
+                ArrayList<String> empty = new ArrayList<>();
+                listener.onSuccess(dataSnapshot, names, ids, empty);
             }
 
             @Override
@@ -207,10 +209,13 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         idslist.add(userId);
 
         String eContact1 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
-        String eContact2 = ((EditText)findViewById(R.id.eContact1)).getText().toString();
+        String eContact2 = ((EditText)findViewById(R.id.eContact2)).getText().toString();
 
+        ArrayList<String> test = new ArrayList<>();
+        test.add(userId);
         mDatabase.child("names").setValue(nameslist);
         mDatabase.child("ids").setValue(idslist);
+        mDatabase.child("users").child(userId).child("friends").setValue(test);
         mDatabase.child("users").child(userId).child("profile").child("nric").setValue(nric);
         mDatabase.child("users").child(userId).child("profile").child("name").setValue(name);
         mDatabase.child("users").child(userId).child("profile").child("emergency 1").setValue(eContact1);

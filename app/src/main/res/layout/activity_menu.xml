@@ -14,13 +14,14 @@
         android:weightSum="10">
 
         <TextView
+            android:id="@+id/welcomeText"
             android:layout_width="0px"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="8"
-            android:text="Welcome back!"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:text="Welcome back!"
+            android:textSize="40sp" />
         <Button
             android:id="@+id/settingsButton"
             android:layout_width="0px"
@@ -95,11 +96,22 @@
         android:onClick="gotoNews"
         android:text="Latest Top COVID-19 News" />
 
+    <Button
+        android:id="@+id/chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="20sp"
+        android:background="#AED2FF"
+        android:onClick="gotoChat"
+        android:text="Chat With Friends" />
+
     <LinearLayout
         android:id="@+id/helps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/news"
+        android:layout_below="@+id/chat"
         android:layout_marginHorizontal="30sp"
         android:layout_marginTop="20sp"
         android:orientation="horizontal"

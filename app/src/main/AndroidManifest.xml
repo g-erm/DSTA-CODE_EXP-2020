@@ -26,10 +26,18 @@
         android:roundIcon="@drawable/ppg_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <receiver
             android:name=".ProximityIntentReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
+
+        <activity android:name=".MessageActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <service
             android:name=".TrackingService"
@@ -71,6 +79,36 @@
             android:name=".NewsDetailActivity"
             android:theme="@style/AppTheme.WithActionBar" />
         <activity android:name=".NewsActivity" />
+
+        <activity android:name=".OnlineGameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity android:name=".LoginOnlineActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".TTTGameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".TTTMenuActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreenTheme"/>
+
     </application>
 
 </manifest>
