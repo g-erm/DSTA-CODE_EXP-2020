@@ -11,7 +11,7 @@
     android:layout_weight="1"
     android:padding="5dp"
     android:background="@drawable/woods"
-    tools:context=".MenuActivity">
+    tools:context=".TTTMenuActivity">
 
 
     <mehdi.sakout.fancybuttons.FancyButton
@@ -51,7 +51,7 @@
         fancy:fb_iconPosition="left"
         fancy:fb_textSize="@dimen/size_menu_button"
         fancy:fb_radius="30dp"
-        fancy:fb_text="@string/online"
+        fancy:fb_text="Multiplayer"
         fancy:fb_textColor="#FFFFFF"
         android:onClick="StartGameOnline"
         />

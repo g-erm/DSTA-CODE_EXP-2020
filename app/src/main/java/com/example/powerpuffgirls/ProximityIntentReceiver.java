@@ -26,15 +26,19 @@ public class ProximityIntentReceiver extends BroadcastReceiver {
         }
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context)
+        String NOTIFICATION_CHANNEL_ID = "com.example.powerpuffgirls";
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
+        Notification notification = notificationBuilder
                         .setSmallIcon(R.drawable.alert)
                         .setContentTitle("Proximity Alert!")
-                        .setContentText("You are near a current cluster!" );
+                        .setContentText("You are near a current cluster!" )
+                        .build();
+        Intent notificationIntent = new Intent();
+        // set intent so it does not start a new activity
 
-        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0,notificationIntent, 0);
+        notificationBuilder.setContentIntent(pIntent);
+        notificationManager.notify(NOTIFICATION_ID, notification);
 
 
     }

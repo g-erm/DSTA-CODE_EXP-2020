@@ -3,6 +3,7 @@ package com.example.powerpuffgirls;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -42,10 +43,10 @@ public class WorkoutVideoActivity extends AppCompatActivity {
         final int difficultyChoice = caller.getIntExtra("Difficulty", 0);
         difficultyNum = difficultyChoice;
         final String difficultyString = caller.getStringExtra("Difficulty String");
-        TextView textview = (TextView) findViewById(R.id.chosenDiff);
+        TextView textview = findViewById(R.id.chosenDiff);
         textview.setText(difficultyString + " Activities");
-        webView = (WebView) findViewById(R.id.webView);
-        choices = (NumberPicker) findViewById(R.id.np_videos);
+        webView = findViewById(R.id.webView);
+        choices = findViewById(R.id.np_videos);
         String[] possibilitiesStrings;
 
         if (difficultyChoice == 0) {
@@ -63,26 +64,47 @@ public class WorkoutVideoActivity extends AppCompatActivity {
     public void goVideo(View v) {
         int videoNumber = choices.getValue();
         if (difficultyNum == 0) {
-            if (videoNumber == 0)
+            if (videoNumber == 0) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=mK1q3b2jQqI");
-            else if (videoNumber == 1)
+            } else if (videoNumber == 1) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=YGRje8p5gbc");
-            else if (videoNumber == 2)
+            } else if (videoNumber == 2) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=eHXbj2Uq8mM");
+            }
         } else if (difficultyNum == 1) {
-            if (videoNumber == 0)
+            if (videoNumber == 0) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=cEOS2zoyQw4");
-            else if (videoNumber == 1)
+            } else if (videoNumber == 1) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=BNC4bi3Ucac");
-            else if (videoNumber == 2)
+            } else if (videoNumber == 2) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=Ev6yE55kYGw");
+            }
         } else {
-            if (videoNumber == 0)
+            if (videoNumber == 0) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=2fpIva72q_k");
-            else if (videoNumber == 1)
+            } else if (videoNumber == 1) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=hcNhFTHh17s");
-            else if (videoNumber == 2)
+            } else if (videoNumber == 2) {
+                MenuActivity.music.pause();
                 webView.loadUrl("https://www.youtube.com/watch?v=uZXQuqPnp8g");
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        if (!MenuActivity.music.isPlaying() && prefs.getBoolean("menuCheck", true)) {
+            MenuActivity.music.start();
         }
     }
 }

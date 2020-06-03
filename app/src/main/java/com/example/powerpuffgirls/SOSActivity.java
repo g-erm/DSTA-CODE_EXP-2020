@@ -58,22 +58,19 @@ public class SOSActivity extends AppCompatActivity {
         longitude = caller.getStringExtra("longitude");
         latitude = caller.getStringExtra("latitude");
 
-        final boolean isFlashAvailable = getApplicationContext().getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-//        Toast.makeText(getApplicationContext(), "Flash Available: " + Boolean.toString(isFlashAvailable), Toast.LENGTH_SHORT).show();
-        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try {
-            mCameraId = mCameraManager.getCameraIdList()[0];
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-        if (isFlashAvailable) {
-            switchFlashLight(true);
-        }
-
-        if(!checkPermission(Manifest.permission.SEND_SMS)) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            final boolean isFlashAvailable = getApplicationContext().getPackageManager()
+                    .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+            mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+            try {
+                mCameraId = mCameraManager.getCameraIdList()[0];
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+            if (isFlashAvailable) {
+                switchFlashLight(true);
+            }
         }
 
         if (checkPermission(Manifest.permission.SEND_SMS)) {
@@ -98,10 +95,13 @@ public class SOSActivity extends AppCompatActivity {
         safeButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (isFlashAvailable) {
-                    switchFlashLight(false);
+                if (ContextCompat.checkSelfPermission(SOSActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (getApplicationContext().getPackageManager()
+                            .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                        switchFlashLight(false);
+                    }
                 }
-                startActivity(new Intent(SOSActivity.this, MenuActivity.class));
                 finish();
                 return false;
             }
@@ -118,7 +118,7 @@ public class SOSActivity extends AppCompatActivity {
                 + "help requested at " + cleanString(format) + " (GMT)";
         if (checkPermission(Manifest.permission.SEND_SMS)) {
             smsManager.sendTextMessage(policeNumber, null, smsMessage, null, null);
-            Toast.makeText(this, "Informed Police!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Notified police", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
@@ -169,7 +169,7 @@ public class SOSActivity extends AppCompatActivity {
                 }
             }
             if (sent)
-                Toast.makeText(this, "Message Sent!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Message sent to emergency contacts", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(this, "No available Emergency Contacts", Toast.LENGTH_SHORT).show();
         } else {
