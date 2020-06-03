@@ -108,19 +108,19 @@ public class ChatFragment extends Fragment {
         Log.d("act", getActivity().toString());
         listView.setAdapter(new ChatsViewAdapter(getActivity(), friends));
         listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mychats, new chatwithfriendsFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.mychats, new chatwithfriendsFragment());
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
 //                Object o = listView.getItemAtPosition(position);
 //                String str = (String) o;
 //                Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-            }
-        });
+//            }
+//        });
     }
 
     @Override
