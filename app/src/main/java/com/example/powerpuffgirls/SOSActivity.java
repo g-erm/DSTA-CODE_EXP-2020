@@ -100,7 +100,6 @@ public class SOSActivity extends AppCompatActivity {
                 if (isFlashAvailable) {
                     switchFlashLight(false);
                 }
-                startActivity(new Intent(SOSActivity.this, MenuActivity.class));
                 finish();
                 return false;
             }
@@ -117,7 +116,7 @@ public class SOSActivity extends AppCompatActivity {
                 + "help requested at " + cleanString(format) + " (GMT)";
         if (checkPermission(Manifest.permission.SEND_SMS)) {
             smsManager.sendTextMessage(policeNumber, null, smsMessage, null, null);
-            Toast.makeText(this, "Informed Police!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Notified police", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
@@ -168,7 +167,7 @@ public class SOSActivity extends AppCompatActivity {
                 }
             }
             if (sent)
-                Toast.makeText(this, "Message Sent!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Message sent to emergency contacts", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(this, "No available Emergency Contacts", Toast.LENGTH_SHORT).show();
         } else {

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +49,21 @@ public class DeclarationActivity extends AppCompatActivity {
                 String departureString = departure.getText().toString();
                 String returnString = returnDate.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss");
+                if (countryChoices.getSelectedItem().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Destination empty.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (departureString.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Departure date empty.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (returnString.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Return date empty.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy @ hh-mm-ss (GMT)");
                 String format = simpleDateFormat.format(new Date());
 
                 mDatabase.child("users").child(mAuth.getUid()).child("travel").child(format).child("country").setValue(countryChoices.getSelectedItem().toString());
@@ -59,6 +74,9 @@ public class DeclarationActivity extends AppCompatActivity {
                 departure.setText("");
                 returnDate.setText("");
                 countryChoices.setAdapter(adapter);
+                Toast.makeText(getApplicationContext(), "Submitted Travel Declaration!",
+                        Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -68,12 +86,20 @@ public class DeclarationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String temp = temperature.getText().toString();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                if (temp.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Temperature empty",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy (GMT)");
                 String format = simpleDateFormat.format(new Date());
 
                 mDatabase.child("users").child(mAuth.getUid()).child("health").child(format).child("temperature").setValue(temp);
-
                 temperature.setText("");
+                Toast.makeText(getApplicationContext(), "Submitted Health Declaration! Submit again to overwrite.",
+                        Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

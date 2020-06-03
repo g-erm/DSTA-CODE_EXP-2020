@@ -105,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
                                 public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name, ArrayList<String> id, ArrayList<String> friends) {
                                     onAuthSuccess(task.getResult().getUser(), user_name, name, id, eContact1, eContact2);
                                     finish();
-                                    Toast.makeText(SignupActivity.this, "Proceed to login.",
+                                    Toast.makeText(SignupActivity.this, "Proceed to login",
                                             Toast.LENGTH_SHORT).show();
                                 }
 
@@ -123,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Improve your password.",
+                            Toast.makeText(SignupActivity.this, "Username taken/Improve passport",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }

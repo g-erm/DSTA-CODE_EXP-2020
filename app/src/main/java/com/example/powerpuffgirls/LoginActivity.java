@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity { //SafeDelete Type Paramet
         try {
             signIn(NRIC, password);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Invalud NRIC/Password",
+            Toast.makeText(getApplicationContext(), "Invalid NRIC/Password",
                     Toast.LENGTH_SHORT).show();
         }
     }
