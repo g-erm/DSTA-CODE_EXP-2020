@@ -1,5 +1,6 @@
 package com.example.powerpuffgirls;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -19,22 +20,59 @@ import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MenuActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST = 100;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     public static MediaPlayer music;
+
+    TextView welcomeText;
+    private String name = "";
+    private String eContact1 = "";
+    private String eContact2 = "";
+    private String longitude = "";
+    private String latitude = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("users").child(mAuth.getUid()).child("profile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getStaticData(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Retrieve Static Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mDatabase.child("users").child(mAuth.getUid()).child("location").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getLocationData(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Retrieve Location Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
 
@@ -45,6 +83,8 @@ public class MenuActivity extends AppCompatActivity {
         if (prefs.getBoolean("menuCheck", true)) {
             music.start();
         }
+
+
 
         //Check whether this app has access to the location permission//
 
@@ -69,7 +109,6 @@ public class MenuActivity extends AppCompatActivity {
                     PERMISSIONS_REQUEST);
         }
 
-
 //        if (permission2 == PackageManager.PERMISSION_DENIED) {
 //            Log.d("Text", "");
 //            ActivityCompat.requestPermissions(this,
@@ -83,6 +122,21 @@ public class MenuActivity extends AppCompatActivity {
 //        }
     }
 
+    protected void getStaticData (DataSnapshot dataSnapshot) {
+        Object nameRaw = dataSnapshot.child("name").getValue();
+        if (nameRaw != null) name = nameRaw.toString();
+        Object eContact1Raw = dataSnapshot.child("emergency 1").getValue();
+        if (eContact1Raw != null) eContact1 = eContact1Raw.toString();
+        Object eContact2Raw = dataSnapshot.child("emergency 2").getValue();
+        if (eContact2Raw != null) eContact2 = eContact2Raw.toString();
+    }
+
+    protected void getLocationData (DataSnapshot dataSnapshot) {
+        Object longitudeRaw = dataSnapshot.child("longitude").getValue();
+        if (longitudeRaw != null) longitude = longitudeRaw.toString();
+        Object latitudeRaw = dataSnapshot.child("latitude").getValue();
+        if (latitudeRaw != null) latitude = latitudeRaw.toString();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
@@ -134,7 +188,13 @@ public class MenuActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(MenuActivity.this, SOSActivity.class));
+                        Intent sosIntent = new Intent(MenuActivity.this, SOSActivity.class);
+                        sosIntent.putExtra("name", name);
+                        sosIntent.putExtra("eContact1", eContact1);
+                        sosIntent.putExtra("eContact2", eContact2);
+                        sosIntent.putExtra("longitude", longitude);
+                        sosIntent.putExtra("latitude", latitude);
+                        startActivity(sosIntent);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -183,6 +243,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onDestroy();
         if (music != null) {
             music.release();
+            music = null;
         }
     }
 }

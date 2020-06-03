@@ -13,10 +13,14 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
@@ -26,15 +30,33 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Ref;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrackingService extends Service {
 
     private static final String TAG = TrackingService.class.getSimpleName();
+    private static final String PROXIMITY_ALERT = "com.example.powerpuffgirls.ProximityAlert";
+    private static final float POINT_RADIUS = 100;
+    private static final long PROX_ALERT_EXPIRATION = -1;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -55,8 +77,8 @@ public class TrackingService extends Service {
             startForeground(1, new Notification());
     }
 
-    private void startMyOwnForeground(){
-        String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
+    private void startMyOwnForeground() {
+        String NOTIFICATION_CHANNEL_ID = "com.example.powerpuffgirls";
         String channelName = "My Background Service";
         NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
         chan.setLightColor(Color.BLUE);
@@ -67,7 +89,7 @@ public class TrackingService extends Service {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.tracking_enabled)
                 .setContentTitle("App is running in background")
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
@@ -127,7 +149,70 @@ public class TrackingService extends Service {
                     }
                 }
             }, null);
+
+            checkIfNearInfectedPlaces();
+
         }
+    }
+
+    private void checkIfNearInfectedPlaces() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference fileRef = storageRef.child("clusters/coordinates.csv");
+        File localFile = null;
+
+        try {
+            localFile = File.createTempFile("clusters", "csv");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        fileRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(), "Success get Coords", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Toast.makeText(getApplicationContext(), "Fail get Coords", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        List<String[]> rows = new ArrayList<>();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(localFile));
+            String line;
+            String csvSplitBy = ",";
+
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] row = line.split(csvSplitBy);
+                rows.add(row);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Intent intent = new Intent(PROXIMITY_ALERT);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        for (int i = 0; i < rows.size(); i++) {
+            double lat = Double.parseDouble(rows.get(i)[0]);
+            double longitude = Double.parseDouble(rows.get(i)[1]);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                lm.addProximityAlert(lat, longitude, POINT_RADIUS, PROX_ALERT_EXPIRATION, proximityIntent);
+            }
+        }
+
     }
 
     protected void getUserDetails() {
