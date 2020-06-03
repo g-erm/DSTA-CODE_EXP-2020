@@ -85,10 +85,6 @@ public class MenuActivity extends AppCompatActivity {
             music.start();
         }
 
-        //Check whether this app has access to the location permission//
-        int permission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-
         if (ContextCompat.checkSelfPermission(MenuActivity.this
                 , Manifest.permission.ACCESS_FINE_LOCATION)
                 + ContextCompat.checkSelfPermission(MenuActivity.this
@@ -123,6 +119,10 @@ public class MenuActivity extends AppCompatActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+
+            //Check whether this app has access to the location permission//
+            int permission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
 
             //If the location permission has been granted, then start the TrackerService//
             if (permission == PackageManager.PERMISSION_GRANTED) {
@@ -161,8 +161,9 @@ public class MenuActivity extends AppCompatActivity {
             grantResults) {
 
         //If the permission has been granted...//
-        if (requestCode == PERMISSIONS_REQUEST && grantResults.length == 1
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (
+//                requestCode == PERMISSIONS_REQUEST && grantResults.length == 1 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //...then start the GPS tracking service//
             startTrackerService();
         } else {
