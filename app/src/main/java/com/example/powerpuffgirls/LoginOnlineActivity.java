@@ -49,16 +49,22 @@ public class LoginOnlineActivity extends Activity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
+    private String name;
+    private Set<String> setuwu = new HashSet<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_online);
+
+        Intent caller = getIntent();
+        name = caller.getStringExtra("name");
 
         tvSendRequest = findViewById(R.id.tvSendRequest);
         tvAcceptRequest = findViewById(R.id.tvAcceptRequest);
@@ -68,6 +74,7 @@ public class LoginOnlineActivity extends Activity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         lv_loginUsers = findViewById(R.id.lv_loginUsers);
         adpt = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list_loginUsers);
@@ -81,6 +88,24 @@ public class LoginOnlineActivity extends Activity {
 
         tvUserID = findViewById(R.id.tvLoginUser);
 
+        getData(new OnGetGameListener() {
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot, ArrayList<String> name) {
+                editList(name);
+            }
+
+            @Override
+            public void onStart() {
+                Log.d("ONSTART", "Started");
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d("ONFAIL", "failed");
+            }
+        });
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -90,10 +115,12 @@ public class LoginOnlineActivity extends Activity {
                     // User is signed in
                     LoginUID = user.getUid();
                     Log.d("Auth", "onAuthStateChanged:signed_in:" + LoginUID);
-                    LoginUserID = user.getEmail();
+                    LoginUserID = name;
+//                    LoginUserID = user.getEmail();
                     tvUserID.setText(LoginUserID);
-                    UserName = convertEmailToString(LoginUserID);
-                    UserName = UserName.replace(".", "");
+//                    UserName = convertEmailToString(LoginUserID);
+//                    UserName = UserName.replace(".", "");
+                    UserName = name;
                     myRef.child("users").child(UserName).child("request").setValue(LoginUID);
                     reqUsersAdpt.clear();
                     AcceptIncommingRequests();
@@ -133,6 +160,37 @@ public class LoginOnlineActivity extends Activity {
                 confirmRequest(requestFromUser, "From");
             }
         });
+    }
+
+    public void getData(final OnGetGameListener listener) {
+        listener.onStart();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> names = (ArrayList<String>) dataSnapshot.child("names").getValue();
+                while (names == null) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                listener.onSuccess(dataSnapshot, names);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onFailure();
+            }
+        });
+    }
+
+    public void editList(ArrayList<String> names) {
+        for (String name: names) {
+            if (name != this.name) {
+                setuwu.add(name);
+            }
+        }
     }
 
     void confirmRequest(final String OtherPlayer, final String reqType){
@@ -224,8 +282,10 @@ public class LoginOnlineActivity extends Activity {
             }
         }
 
+//        String[] namesArray = mDatabase.
+
         adpt.clear();
-        adpt.addAll(set);
+        adpt.addAll(setuwu);
         adpt.notifyDataSetChanged();
         tvSendRequest.setText("Send request to");
         tvAcceptRequest.setText("Accept request from");
