@@ -76,7 +76,7 @@ public class MenuActivity extends AppCompatActivity {
 
         final SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
 
-        music = MediaPlayer.create(this, R.raw.wamengti);
+        if (music == null) music = MediaPlayer.create(this, R.raw.wamengti);
         music.setLooping(true);
         float vol = prefs.getFloat("menuVolume", 0.5f);
         music.setVolume(vol,vol);
@@ -188,6 +188,7 @@ public class MenuActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        music.pause();
                         Intent sosIntent = new Intent(MenuActivity.this, SOSActivity.class);
                         sosIntent.putExtra("name", name);
                         sosIntent.putExtra("eContact1", eContact1);
@@ -208,6 +209,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoHelp(View view) {
+        music.pause();
         startActivity(new Intent(MenuActivity.this, HelpActivity.class));
     }
 
@@ -244,6 +246,14 @@ public class MenuActivity extends AppCompatActivity {
         if (music != null) {
             music.release();
             music = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!music.isPlaying()) {
+            music.start();
         }
     }
 }
